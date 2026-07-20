@@ -1,0 +1,31 @@
+---
+// Homepage. Figma: Homepage 126:6795 (1440×1799).
+// Header (98) + Hero (432) + Selected Work (869) + Footer (400) = 1799.
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Adi Peery — Product Designer">
+  <div class="page">
+    <Header active="work" />
+    <main>
+      <Hero />
+      <SelectedWork />
+    </main>
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  /* The design canvas is 1440 wide; center it and cap at 1440 on larger screens. */
+  .page {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    background: var(--color-bg-white);
+    overflow-x: clip;
+  }
+</style>

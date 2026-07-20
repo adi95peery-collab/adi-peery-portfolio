@@ -1,0 +1,51 @@
+---
+// Baby Boost case study. Figma: Baby Boost Viewport 198:27241 (1440×14992).
+// Site nav header + contiguous image-exact sections + footer.
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CaseStudySection from '../../components/CaseStudySection.astro';
+import Overview from '../../components/baby-boost/Overview.astro';
+import Impact from '../../components/baby-boost/Impact.astro';
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/baby-boost');
+const hero: [string, string, number] = [`${A}/01-hero.png`, 'Baby Boost — a parenting app, hero', 655.32];
+// Visual-dominant sections kept as exact images (app screens + illustrations).
+const mid: [string, string, number][] = [
+  [`${A}/03-research.png`, 'Research and ideation', 2135.94],
+  [`${A}/04a-wireframes.png`, 'Wireframes for the core flows', 1049.07],
+  [`${A}/04b-workflow01.png`, 'Workflow 01 — a guided walkthrough', 1728.91],
+  [`${A}/04c-journey.png`, 'Journey and milestones', 2182.51],
+  [`${A}/04d-beyond.png`, 'Beyond the activity', 2131.19],
+  [`${A}/04e-ai-collab.png`, 'AI collaboration and the illustration system', 3434.22],
+];
+---
+
+<Base title="Baby Boost — Case Study · Adi Peery" description="Baby Boost — a parenting app that turns everyday moments into guided developmental activities. A case study by Adi Peery.">
+  <div class="page">
+    <Header active="work" />
+
+    <main class="case-study">
+      <h1 class="sr-only">Baby Boost — a parenting app</h1>
+      <CaseStudySection src={hero[0]} alt={hero[1]} height={hero[2]} eager={true} />
+      <Overview />
+      {mid.map(([src, alt, h]) => (
+        <CaseStudySection src={src} alt={alt} height={h} />
+      ))}
+      <Impact />
+    </main>
+
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .page {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    background: var(--color-bg-white);
+    overflow-x: clip;
+  }
+</style>

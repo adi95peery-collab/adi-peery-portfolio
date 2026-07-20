@@ -1,0 +1,61 @@
+---
+// Homepage hero. Figma: Hero 234:12418.
+// Headline: Inter Bold 58px / 66px line-height / -1.5px tracking, 900px wide.
+// "intuitive" in accent pink. Subtext: Inter Regular 20px / 28px, 800px wide.
+---
+
+<section class="hero" data-fidelity="hero">
+  <div class="hero__content" data-reveal>
+    <h1 class="hero__title">
+      I'm Adi, a Product Designer passionate about turning complexity into <span class="accent">intuitive</span> experiences.
+    </h1>
+    <p class="hero__sub">
+      With a background in Industrial Design, I bring systems thinking and a user-centered approach to every product I design.
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 44px 100px 40px;
+  }
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+    text-align: center;
+    color: var(--color-text-primary);
+    max-width: 100%;
+  }
+  .hero__title {
+    width: 900px;
+    max-width: 100%;
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 66px;
+    letter-spacing: -1.5px;
+  }
+  .hero__title .accent { color: var(--color-accent); }
+  .hero__sub {
+    width: 800px;
+    max-width: 100%;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  /* --- Responsive (fluid down-scale; no mobile design exists) ------------ */
+  @media (max-width: 900px) {
+    .hero { padding: 40px 40px 32px; }
+    .hero__title { font-size: clamp(34px, 6.4vw, 58px); line-height: 1.14; }
+    .hero__sub { font-size: clamp(16px, 2.4vw, 20px); line-height: 1.4; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding: 28px 20px 24px; }
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+// About hero. Figma: About Hero 126:17089.
+// text (flex-1, gap 20) + circular portrait (399, #d3eeff bg baked into export).
+import { withBase } from '../lib/base';
+---
+
+<section class="about-hero" data-fidelity="about-hero">
+  <div class="about-hero__text" data-reveal>
+    <p class="about-hero__eyebrow">ABOUT ME</p>
+    <h1 class="about-hero__title">Hi, I'm Adi.</h1>
+    <p class="about-hero__lead">
+      I'm a Product Designer with experience designing both physical and digital products. I enjoy turning complex challenges into intuitive experiences by combining user research, systems thinking, and purposeful design.
+    </p>
+  </div>
+  <div class="about-hero__image" data-reveal>
+    <img src={withBase('/assets/about-portrait.png')} width="399" height="399" alt="Portrait of Adi Peery" />
+  </div>
+</section>
+
+<style>
+  .about-hero {
+    display: flex;
+    gap: 64px;
+    align-items: center;
+    padding: 80px 100px;
+  }
+  .about-hero__text {
+    flex: 1 0 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .about-hero__eyebrow {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.3;
+    letter-spacing: 1.2px;
+    color: var(--color-accent);
+  }
+  .about-hero__title {
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+  .about-hero__lead {
+    width: 100%;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-text-third);
+  }
+  .about-hero__image {
+    flex-shrink: 0;
+    width: 399px;
+    height: 399px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #d3eeff;
+  }
+  .about-hero__image img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* --- Responsive: stack portrait over text, centered -------------------- */
+  @media (max-width: 900px) {
+    .about-hero {
+      flex-direction: column-reverse;
+      gap: 32px;
+      align-items: center;
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .about-hero__text { align-items: center; }
+    .about-hero__title { font-size: clamp(40px, 9vw, 72px); white-space: normal; }
+    .about-hero__image { width: clamp(200px, 60vw, 300px); height: clamp(200px, 60vw, 300px); }
+  }
+</style>

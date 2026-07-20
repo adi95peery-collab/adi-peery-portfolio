@@ -1,0 +1,66 @@
+---
+// Baby Boost — Project Overview + Understanding Parents' Needs (real HTML).
+// Figma: 198:37805. Text (Geist/SF Pro) + pink chips; milestone illustration = image.
+import { withBase } from '../../lib/base';
+---
+<section class="bb-ov" data-fidelity="bb-overview" data-reveal>
+  <div class="bb-ov__text">
+    <div class="bb-ov__block">
+      <div class="bb-ov__t">
+        <h2 class="bb-ov__title">Project Overview</h2>
+        <div class="bb-ov__body">
+          <p>Baby Boost is a mobile application that helps parents support their child’s development through personalized activities, milestone tracking, and educational content tailored to each developmental stage.</p>
+          <p>The app combines guided play, progress tracking, and memory documentation to create a supportive and engaging parenting experience.</p>
+        </div>
+      </div>
+      <ul class="bb-ov__chips">
+        <li>Product Designer</li><li>3 Months</li><li>Mobile Application</li><li>Figma</li><li>AI Platforms</li>
+      </ul>
+    </div>
+    <div class="bb-ov__t">
+      <h2 class="bb-ov__title">Understanding Parents’ Needs</h2>
+      <div class="bb-ov__body">
+        <p>Many parents want to support their child’s development, but often feel unsure how to turn everyday moments into meaningful learning experiences.</p>
+        <p>Parents needed a <strong>simple and supportive way</strong> to use their shared time together through guided activities that encourage development, connection, and confidence.</p>
+      </div>
+    </div>
+  </div>
+  <div class="bb-ov__illus">
+    <img src={withBase('/assets/baby-boost/parts/overview-illustration.png')} width="828" height="871" alt="Illustration of a child's developmental milestone path" />
+  </div>
+</section>
+
+<style>
+  .bb-ov {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 112.5px 100px;
+    min-height: 816px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .bb-ov__text { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 180px; width: 675.352px; flex-shrink: 0; }
+  .bb-ov__t { display: flex; flex-direction: column; gap: 9.005px; }
+  .bb-ov__block { display: flex; flex-direction: column; gap: 24.013px; }
+  .bb-ov__title { font-family: var(--font-sf); font-weight: 700; font-size: 45.023px; line-height: 1.19; color: #191e76; }
+  .bb-ov__body { display: flex; flex-direction: column; gap: 1em; }
+  .bb-ov__body p { font-family: var(--font-sf); font-weight: 400; font-size: 18.009px; line-height: 1.3; color: #000; }
+  .bb-ov__body strong { font-weight: 700; }
+  .bb-ov__chips { display: flex; gap: 8.254px; flex-wrap: wrap; }
+  .bb-ov__chips li {
+    background: #ff76bb; color: #fff;
+    font-family: var(--font-sans); font-weight: 600; font-size: 10.505px; line-height: 15.008px;
+    padding: 7.504px 12.006px; border-radius: 75.039px; white-space: nowrap;
+  }
+  .bb-ov__illus { position: absolute; right: -24px; top: 50%; transform: translateY(-50%); z-index: 0; }
+  .bb-ov__illus img { width: 828px; height: 871px; display: block; }
+
+  @media (max-width: 1100px) {
+    .bb-ov { flex-direction: column; align-items: flex-start; padding: 56px clamp(20px,5vw,100px); min-height: 0; gap: 40px; }
+    .bb-ov__text { width: 100%; gap: 48px; }
+    .bb-ov__title { font-size: clamp(30px,5vw,45px); }
+    .bb-ov__illus { position: static; transform: none; align-self: center; }
+    .bb-ov__illus img { width: 100%; height: auto; max-width: 560px; }
+  }
+</style>

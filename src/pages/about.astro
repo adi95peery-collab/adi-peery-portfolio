@@ -1,0 +1,28 @@
+---
+// About page. Figma: About Me 126:17087 (1440×1057).
+// Header (98) + About Hero (559) + Footer (400) = 1057.
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import AboutHero from '../components/AboutHero.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="About — Adi Peery" description="About Adi Peery — Product Designer.">
+  <div class="page">
+    <Header active="about" />
+    <main>
+      <AboutHero />
+    </main>
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .page {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    background: var(--color-bg-white);
+    overflow-x: clip;
+  }
+</style>

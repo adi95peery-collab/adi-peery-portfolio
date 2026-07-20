@@ -1,0 +1,73 @@
+---
+// Smart Stock hero. Figma: 126:6999 / 126:7000.
+// Photo + tablet stay images (real photo + product screenshot); the logo badge
+// and title are rebuilt as real HTML (Inter, per the design) over a CSS gradient.
+import { withBase } from '../../lib/base';
+---
+<section class="ss-hero" data-fidelity="ss-hero">
+  <div class="ss-hero__card">
+    <img class="ss-hero__photo" src={withBase('/assets/smart-stock/parts/hero-photo.png')} alt="" aria-hidden="true" />
+    <div class="ss-hero__grad"></div>
+    <img class="ss-hero__tablet" src={withBase('/assets/smart-stock/parts/hero-tablet.png')} alt="Smart Stock dashboard shown on a tablet" />
+    <div class="ss-hero__overlay">
+      <span class="ss-hero__badge">
+        <img src={withBase('/assets/smart-stock/parts/hero-logo.svg')} width="52" height="52" alt="" aria-hidden="true" />
+      </span>
+      <span class="ss-hero__titles">
+        <span class="ss-hero__title">Smart Stock</span>
+        <span class="ss-hero__sub">Inventory &amp; POS System</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ss-hero { padding: 40px 100px 0; }
+  .ss-hero__card {
+    position: relative;
+    height: 615.32px;
+    border-radius: 30.016px;
+    overflow: hidden;
+    background: #1a2330;
+  }
+  .ss-hero__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ss-hero__grad {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 32%, rgba(0,0,0,0) 62%);
+  }
+  .ss-hero__tablet {
+    position: absolute;
+    top: 173px;
+    right: -2px;
+    width: 587px;
+    height: 457px;
+    object-fit: contain;
+  }
+  .ss-hero__overlay {
+    position: absolute;
+    left: 70.53px;
+    top: 204.11px;
+    display: flex;
+    flex-direction: column;
+    gap: 16.509px;
+    align-items: flex-start;
+    width: 555px;
+  }
+  .ss-hero__badge { background: #2381ff; padding: 19.038px; border-radius: 13.846px; display: inline-flex; }
+  .ss-hero__badge img { width: 51.923px; height: 52.075px; display: block; }
+  .ss-hero__titles { display: flex; flex-direction: column; gap: 6.003px; color: #fff; }
+  .ss-hero__title { font-family: var(--font-sans); font-weight: 800; font-size: 90.047px; line-height: 1.1; }
+  .ss-hero__sub { font-family: var(--font-sans); font-weight: 700; font-size: 45.023px; line-height: 1.1; }
+
+  @media (max-width: 1040px) {
+    .ss-hero { padding: 24px clamp(16px, 4vw, 100px) 0; }
+    .ss-hero__card { height: clamp(320px, 43vw, 615px); }
+    .ss-hero__tablet { width: 46%; height: auto; top: 28%; right: -2%; }
+    .ss-hero__overlay { left: 5%; top: 30%; width: 46%; gap: 12px; }
+    .ss-hero__title { font-size: clamp(34px, 7vw, 90px); }
+    .ss-hero__sub { font-size: clamp(17px, 3.4vw, 45px); }
+    .ss-hero__badge { padding: 3.2%; }
+    .ss-hero__badge img { width: clamp(28px, 3.6vw, 52px); height: clamp(28px, 3.6vw, 52px); }
+  }
+</style>

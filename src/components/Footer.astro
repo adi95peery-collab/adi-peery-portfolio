@@ -1,0 +1,67 @@
+---
+// Site footer (shared). Figma: Footer 126:6957.
+// Faint pink tint bg. Bold title + a links row (email + LinkedIn).
+---
+
+<footer class="footer" data-fidelity="footer">
+  <p class="footer__title">Want to connect?</p>
+  <div class="footer__row">
+    <span class="ul-link"><a href="mailto:adi95peery@gmail.com">Send me a message</a></span>
+    <span class="muted">or</span>
+    <span class="ul-link"><a href="https://www.linkedin.com/in/adi-peery-613b48239/" target="_blank" rel="noopener noreferrer">connect via LinkedIn</a></span>
+    <span class="muted">,</span>
+    <span class="muted">and let’s discuss our next mutual steps.</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 100px;
+    height: 400px;
+    background: rgba(255, 221, 238, 0.2);
+  }
+  .footer__title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 78px;
+    letter-spacing: -0.32px;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+  .footer__row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 22px;
+    line-height: 32px;
+    letter-spacing: 0.44px;
+    white-space: nowrap;
+  }
+  .footer__row .muted { color: var(--color-text-third); }
+  .ul-link {
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--color-grey);
+  }
+  .ul-link a { color: var(--color-grey); }
+
+  /* --- Responsive: the row wraps to lines on small screens --------------- */
+  @media (max-width: 760px) {
+    .footer { height: auto; padding: 56px 24px; }
+    .footer__title { font-size: 26px; line-height: 1.3; }
+    .footer__row {
+      flex-wrap: wrap;
+      justify-content: center;
+      white-space: normal;
+      font-size: 18px;
+      line-height: 1.5;
+      row-gap: 4px;
+    }
+  }
+</style>

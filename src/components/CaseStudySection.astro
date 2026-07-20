@@ -1,0 +1,37 @@
+---
+// One full-width section of a case study: a pixel-exact 2x image export from
+// Figma. `height` is the EXACT Figma section height at 1440px width — applied via
+// aspect-ratio so (a) stacked sections land on Figma's fractional boundaries with
+// no cumulative rounding drift, and (b) it scales proportionally when responsive.
+// `data-reveal` is the hook the global scroll-reveal script animates in.
+interface Props {
+  src: string;
+  alt: string;
+  height: number;   // exact Figma section height (px) at 1440 width
+  eager?: boolean;
+  reveal?: boolean;
+}
+const { src, alt, height, eager = false, reveal = true } = Astro.props;
+---
+
+<div class="cs-section" data-reveal={reveal ? '' : undefined}>
+  <img
+    src={src}
+    alt={alt}
+    width={1440}
+    height={Math.round(height)}
+    style={`aspect-ratio: 1440 / ${height};`}
+    loading="eager"
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding="async"
+  />
+</div>
+
+<style>
+  .cs-section { width: 100%; }
+  .cs-section img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

@@ -1,0 +1,95 @@
+/* =============================================================================
+   Design tokens — extracted 1:1 from Figma variables (file DyF8mmxLD9LMgEXvaME6qS)
+   Source of truth: Figma. Do not hand-tweak values; re-pull with
+   `get_variable_defs` if the design changes. This set covers the Homepage +
+   shared system; case-study-specific tokens are appended as those pages are built.
+   ============================================================================= */
+
+:root {
+  /* --- Color · Text ------------------------------------------------------- */
+  --color-text-primary: #171717;        /* Text/Primary */
+  --color-text-secondary: #737373;      /* Text/Secondary */
+  --color-text-third: #4d4d4d;          /* Text/Third */
+  --color-text-inverse: #ffffff;        /* Text/Inverse, Text/white */
+  --color-text-title: #673ab1;          /* Text/Title (purple) */
+  --color-text-black-primary: #313131;  /* Text/Black (Primary) */
+  --color-text-blue-primary: #060843;   /* Text/Blue (Primary) */
+  --color-text-button-view: #5a6573;    /* Text/Button view */
+  --color-text-secondary-button: #8f5fdd;/* Text/Secondary button */
+  --color-grey: #5a6573;                /* Grey */
+
+  /* --- Color · Accent / Brand --------------------------------------------- */
+  --color-accent: #ff76bb;              /* Accent/Default (pink) */
+
+  /* --- Color · Surfaces / Background -------------------------------------- */
+  --color-bg-surface: #ffffff;          /* var(--color-bg-surface) */
+  --color-bg-white: #ffffff;            /* Background/White, Buttons/white */
+  --color-bg-page: #f8f8f8;             /* Background/Page */
+  --color-bg-topbar: #3c1771;           /* Background/top bar (deep purple) */
+
+  /* --- Color · Icon ------------------------------------------------------- */
+  --color-icon-default: #8d8d8d;        /* Icon/Default */
+  --color-icon-white: #ffffff;          /* Icon/White */
+
+  /* --- Color · Lines / Strokes ------------------------------------------- */
+  --color-stroke-line: #e9eaeb;         /* Background/strok line */
+  --color-card-stroke: #cecbcb;         /* Background/Card Strok */
+  --color-filter-search-stroke: #d0d0d0;/* Background/Filter+ search Stork */
+  --color-buttons-secondary-line: #8f5fdd;
+
+  /* --- Color · Status (Smart Stock case study) --------------------------- */
+  --color-status-shipments-text: #a26900;
+  --color-status-shipments-bg: #f9ecc4;
+  --color-status-stuck-text: #731717;
+  --color-status-stuck-bg: #ffd7d7;
+  --color-status-approved-text: #1d4e36;
+  --color-status-approved-bg: #d7ffd8;
+  --color-status-progress-text: #173b73;
+  --color-status-progress-bg: #d7f2ff;
+
+  /* --- Typography · Families --------------------------------------------- */
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', roboto, sans-serif;
+  --font-display: 'Lexend Variable', 'Lexend', var(--font-sans);
+  /* SF Pro Rounded is Apple-licensed; falls back to a rounded system stack for web. */
+  --font-rounded: 'SF Pro Rounded', 'Nunito', 'Varela Round', var(--font-sans);
+  /* Case studies were designed in SF Pro Display (Apple system font, not
+     licensable for web). Geist is a free, self-hosted, near-identical grotesque
+     used on ALL platforms so the case studies look consistent everywhere. */
+  --font-sf: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', var(--font-sans);
+
+  /* --- Typography · Scale (family / weight / size / line-height / tracking) */
+  /* Body/Default — Inter 400, 16px, 1.6 lh */
+  --text-body-size: 1rem;             /* 16px */
+  --text-body-weight: 400;
+  --text-body-lh: 1.6;
+  --text-body-ls: 0;
+
+  /* Body/Medium — Inter 400, 18px, 1.0 lh */
+  --text-body-md-size: 1.125rem;      /* 18px */
+  --text-body-md-weight: 400;
+  --text-body-md-lh: 1;
+
+  /* Label/Caps — Inter 600, 12px, 1.3 lh, +1.2 tracking (uppercase eyebrow) */
+  --text-label-size: 0.75rem;         /* 12px */
+  --text-label-weight: 600;
+  --text-label-lh: 1.3;
+  --text-label-ls: 1.2px;
+
+  /* Heading/H2 — Inter 600, 40px, 1.15 lh, -0.5 tracking */
+  --text-h2-size: 2.5rem;             /* 40px */
+  --text-h2-weight: 600;
+  --text-h2-lh: 1.15;
+  --text-h2-ls: -0.5px;
+
+  /* Subtitle Regular — SF Pro Rounded 400, 22px, 32px lh, +2 tracking */
+  --text-subtitle-size: 1.375rem;     /* 22px */
+  --text-subtitle-weight: 400;
+  --text-subtitle-lh: calc(32 / 22);
+  --text-subtitle-ls: 2px;
+
+  /* --- Spacing ------------------------------------------------------------ */
+  --space-none: 0;
+  /* Design uses an 8pt-ish rhythm; container gutters observed at 100px & 270px. */
+  --page-max: 1440px;
+  --page-gutter: 100px;
+}

@@ -1,0 +1,108 @@
+---
+// Site header (shared). Figma: Header instance 126:6796.
+// Logo = AP monogram (exact exported vector). Nav: Work / About / Download Resume.
+import { withBase } from '../lib/base';
+
+interface Props {
+  /** which nav item is the current page */
+  active?: 'work' | 'about';
+}
+const { active = 'work' } = Astro.props;
+const RESUME_URL =
+  'https://drive.google.com/file/d/1KQ5-hOxqqe4QfID4zJhBeI2ZD1Zr2fDg/view?usp=sharing';
+---
+
+<header class="site-header" data-fidelity="header">
+  <a class="logo" href={withBase('/')} aria-label="Adi Peery — Home">
+    <!-- AP monogram — exact path exported from Figma (node 126:18156) -->
+    <svg class="logo__mark" viewBox="0 0 38.129 31.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path stroke="#000" stroke-linecap="round" stroke-width="1.5" d="M.75 30.75c2.5-5.5 13-30 19.5-30 3.5 0 4.26 8.157 4.332 16m0 0c0 11-1.917 13.5-3.832 13.5-5.414 0-6.477-4.09-5.5-8 1.5-6 8.5-20.5 16.5-20.5s9 16.5-7.168 15Z"/>
+    </svg>
+  </a>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__item" class:list={[{ 'is-active': active === 'work' }]} href={withBase('/')}>Work</a>
+    <a class="nav__item" class:list={[{ 'is-active': active === 'about' }]} href={withBase('/about')}>About</a>
+    <a class="nav__item nav__download" href={RESUME_URL} target="_blank" rel="noopener noreferrer">
+      Download Resume
+      <!-- arrow glyph exported from Figma (node grey #5A6573), rotated to point down -->
+      <svg class="nav__arrow" viewBox="0 0 16.254 12.503" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="#5A6573">
+          <path d="M10 12.503a.626.626 0 0 1-.444-1.07l5.188-5.18L9.556 1.07a.628.628 0 0 1 .888-.887l5.625 5.625a.626.626 0 0 1 0 .887l-5.625 5.625a.63.63 0 0 1-.444.182"/>
+          <path d="M15.625 6.878h-15a.625.625 0 0 1 0-1.25h15a.625.625 0 1 1 0 1.25"/>
+        </g>
+      </svg>
+    </a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--color-bg-white);
+    padding: 24px 100px;
+  }
+
+  .logo {
+    width: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo__mark {
+    /* viewBox 38.13×31.5 fit to a 30px-tall slot (keeps header at 98px);
+       stroke bleed is allowed to overflow so the mark isn't clipped. */
+    width: 36.31px;
+    height: 30px;
+    display: block;
+    overflow: visible;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .nav__item {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+  .nav__item:hover { color: var(--color-text-primary); }
+  .nav__item.is-active {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+  .nav__download {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text-secondary);
+  }
+  .nav__arrow {
+    width: 16.25px;
+    height: 12.5px;
+    transform: rotate(90deg);
+    flex-shrink: 0;
+  }
+
+  /* --- Responsive (no mobile design exists; sensible reflow) ------------- */
+  @media (max-width: 768px) {
+    .site-header { padding: 16px 24px; }
+    .nav { gap: 20px; }
+    .nav__item { font-size: 15px; }
+    .nav__download span,
+    .nav__download { gap: 4px; }
+  }
+  @media (max-width: 480px) {
+    /* keep resume label short on very small screens */
+    .nav { gap: 14px; }
+  }
+</style>

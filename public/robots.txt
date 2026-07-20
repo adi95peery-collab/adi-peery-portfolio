@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adi95peery-collab.github.io/adi-peery-portfolio/sitemap.xml

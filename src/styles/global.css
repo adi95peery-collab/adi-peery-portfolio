@@ -1,0 +1,87 @@
+/* =============================================================================
+   Global reset + base — tuned for pixel-perfect fidelity and deterministic
+   rendering (so the Playwright/pixelmatch harness produces stable diffs).
+   ============================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Match Figma's text rendering as closely as a browser allows. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-lh);
+  color: var(--color-text-primary);
+  background: var(--color-bg-white);
+  /* Figma uses fractional layout metrics; don't let the UA hyphenate/space oddly. */
+  font-feature-settings: normal;
+  font-variant-ligatures: none;
+  /* Figma's Inter has no optical-size axis; the browser would otherwise apply
+     opsz=auto at large sizes and reshape glyphs, causing centered headings to
+     drift. Pin it off so glyph advances match the design. */
+  font-optical-sizing: none;
+}
+
+img, svg, video, canvas, picture {
+  display: block;
+  max-width: 100%;
+}
+
+img, video { height: auto; }
+
+a { color: inherit; text-decoration: none; }
+
+button, input, textarea, select { font: inherit; color: inherit; }
+
+button { background: none; border: none; cursor: pointer; }
+
+ul, ol { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: inherit; font-size: inherit; }
+
+/* Reveal elements start hidden ONLY when JS motion is active (class added by
+   motion.ts), so there's no flash and no-JS/reduced-motion users see content. */
+html.motion [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+}
+
+/* Respect reduced-motion for all GSAP/CSS animation we add later. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility: the 1440-wide design canvas, centered, with the observed gutter. */
+.page-shell {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+
+/* Visually-hidden but available to screen readers / SEO. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,54 @@
+---
+// Smart Stock — The Challenge (real HTML). Figma: 126:7036.
+// Text (Geist / SF Pro substitute) left, floating icon cluster (image) right.
+import { withBase } from '../../lib/base';
+---
+<section class="ss-ch" data-fidelity="ss-challenge" data-reveal>
+  <div class="ss-ch__text">
+    <h2 class="ss-ch__title">The Challenge</h2>
+    <div class="ss-ch__body">
+      <p>Current inventory management relies on <strong>disconnected systems</strong>, causing operational errors, workflow bottlenecks, and missed cost savings.</p>
+      <p>Staff spend <strong>40% of their time</strong> switching between tools, leading to duplicate orders and inefficient purchasing decisions.</p>
+    </div>
+  </div>
+  <div class="ss-ch__icons">
+    <img src={withBase('/assets/smart-stock/parts/challenge-icons.png')} width="243" height="233" alt="" aria-hidden="true" />
+  </div>
+</section>
+
+<style>
+  .ss-ch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 75.039px 100px;
+    min-height: 372.94px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .ss-ch__text { width: 675.352px; flex-shrink: 0; display: flex; flex-direction: column; gap: 9.005px; }
+  .ss-ch__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 45.023px;
+    line-height: 1.19;
+    color: #311976;
+  }
+  .ss-ch__body { display: flex; flex-direction: column; gap: 1em; }
+  .ss-ch__body p {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18.009px;
+    line-height: 1.3;
+    color: #000;
+  }
+  .ss-ch__body strong { font-weight: 700; }
+  .ss-ch__icons { flex-shrink: 0; }
+  .ss-ch__icons img { width: 243px; height: 233px; display: block; }
+
+  @media (max-width: 1040px) {
+    .ss-ch { padding: 56px clamp(20px, 5vw, 100px); gap: 32px; }
+    .ss-ch__text { width: 100%; }
+    .ss-ch__title { font-size: clamp(30px, 5vw, 45px); }
+  }
+</style>

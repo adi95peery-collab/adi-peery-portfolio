@@ -1,0 +1,60 @@
+---
+// Smart Stock case study. Figma: Smart Stock Viewport 198:19039 (1440×12575).
+// Site nav header + 7 contiguous sections (image-exact) + footer.
+// Heavy visual/screenshot sections are exported 2x from Figma for true 1:1.
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CaseStudySection from '../../components/CaseStudySection.astro';
+import Overview from '../../components/smart-stock/Overview.astro';
+import Challenge from '../../components/smart-stock/Challenge.astro';
+import Hero from '../../components/smart-stock/Hero.astro';
+import Impact from '../../components/smart-stock/Impact.astro';
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/smart-stock');
+// [src, alt, exactFigmaHeight] — visual-dominant sections kept as exact images
+// (app screens, dashboards, mind-map, style-guide board are true screenshots).
+const sections: [string, string, number][] = [
+  [`${A}/04-research.png`, 'Research and ideation: user interviews, insights, and early concepts', 2025.35],
+  [`${A}/05a-wireframes.png`, 'Wireframes exploring the core flows', 1051.54],
+  [`${A}/05b-workflow01.png`, 'Workflow 1 — zoomed walkthrough of a key task', 1245.65],
+  [`${A}/05c-workflow2.png`, 'Workflow 2 overview', 861.85],
+  [`${A}/05d-flow2.png`, 'Workflow 2 — zoomed walkthrough', 1245.65],
+  [`${A}/05e-dashboard.png`, 'The Smart Stock dashboard design', 1669.62],
+  [`${A}/05f-app.png`, 'The companion app screens', 871.45],
+  [`${A}/06-design-system.png`, 'Design system and style guide', 1173.38],
+];
+---
+
+<Base title="Smart Stock — Case Study · Adi Peery" description="Smart Stock — an inventory & POS system for small pharmacies. A case study by Adi Peery.">
+  <div class="page">
+    <Header active="work" />
+
+    <main class="case-study">
+      <!-- Semantic outline for SEO / screen readers (visuals are image exports) -->
+      <h1 class="sr-only">Smart Stock — Inventory &amp; POS System</h1>
+
+      <Hero />
+      <Overview />
+      <Challenge />
+      {sections.map(([src, alt, h]) => (
+        <CaseStudySection src={src} alt={alt} height={h} />
+      ))}
+      <Impact />
+    </main>
+
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .page {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    background: var(--color-bg-white);
+    overflow-x: clip;
+  }
+  .case-study { display: block; }
+</style>

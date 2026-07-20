@@ -1,0 +1,57 @@
+---
+// Smart Stock — Impact (real HTML). Figma: 126:10052.
+// Text + "Back to Home" link (Geist/Inter) left, floating icon cluster (image) right.
+import { withBase } from '../../lib/base';
+---
+<section class="ss-im" data-fidelity="ss-impact" data-reveal>
+  <div class="ss-im__content">
+    <div class="ss-im__text">
+      <h2 class="ss-im__title">Impact</h2>
+      <p class="ss-im__body">PharmaCare transforms fragmented pharmacy operations into a single, efficient workflow. The platform reduces manual work, improves purchasing decisions through AI-driven insights, and helps small pharmacies operate with the confidence and efficiency of larger chains.</p>
+    </div>
+    <a class="ss-im__back" href={withBase('/')}>
+      <svg class="ss-im__arrow" viewBox="0 0 16.254 12.503" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="#5A6573">
+          <path d="M10 12.503a.626.626 0 0 1-.444-1.07l5.188-5.18L9.556 1.07a.628.628 0 0 1 .888-.887l5.625 5.625a.626.626 0 0 1 0 .887l-5.625 5.625a.63.63 0 0 1-.444.182"/>
+          <path d="M15.625 6.878h-15a.625.625 0 0 1 0-1.25h15a.625.625 0 1 1 0 1.25"/>
+        </g>
+      </svg>
+      <span>Back to Home</span>
+    </a>
+  </div>
+  <div class="ss-im__icons">
+    <img src={withBase('/assets/smart-stock/parts/impact-icons.png')} width="245" height="225" alt="" aria-hidden="true" />
+  </div>
+</section>
+
+<style>
+  .ss-im {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 75.039px 100px;
+    min-height: 388.09px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .ss-im__content { width: 675.352px; flex-shrink: 0; display: flex; flex-direction: column; gap: 32px; }
+  .ss-im__text { display: flex; flex-direction: column; gap: 18.009px; }
+  .ss-im__title { font-family: var(--font-sf); font-weight: 700; font-size: 45.023px; line-height: 1.19; color: #311976; }
+  .ss-im__body { font-family: var(--font-sf); font-weight: 400; font-size: 18.009px; line-height: 1.5; color: #000; }
+  .ss-im__back {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding-bottom: 4px; border-bottom: 1.5px solid var(--color-grey);
+    color: var(--color-grey); font-size: 18px; width: fit-content;
+    transition: gap 0.2s ease;
+  }
+  .ss-im__back:hover { gap: 8px; }
+  .ss-im__arrow { width: 16.25px; height: 12.5px; transform: rotate(180deg); flex-shrink: 0; }
+  .ss-im__icons { flex-shrink: 0; }
+  .ss-im__icons img { width: 245px; height: 225px; display: block; }
+
+  @media (max-width: 1040px) {
+    .ss-im { padding: 56px clamp(20px, 5vw, 100px); gap: 32px; }
+    .ss-im__content { width: 100%; }
+    .ss-im__title { font-size: clamp(30px, 5vw, 45px); }
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+// Smart Stock — Project Overview (real HTML rebuild). Figma: 126:7016.
+// Headings/body: SF Pro Display; chips: Inter. Values are the design's ×1.5 scale.
+import { withBase } from '../../lib/base';
+---
+<section class="ss-ov" data-fidelity="ss-overview" data-reveal>
+  <div class="ss-ov__content">
+    <div class="ss-ov__text">
+      <h2 class="ss-ov__title">Project Overview</h2>
+      <p class="ss-ov__body">
+        PharmaCare is an integrated platform that unifies inventory management, supplier ordering, and POS functionality into a single, intuitive system tailored specifically for small pharmacy operations.<br />
+        Integrating an AI-powered agent that optimizes purchasing and inventory decisions based on real-time.
+      </p>
+    </div>
+    <ul class="ss-ov__chips">
+      <li class="chip">Product Designer</li>
+      <li class="chip">3 Months</li>
+      <li class="chip">Web Application</li>
+      <li class="chip">Figma</li>
+    </ul>
+  </div>
+  <div class="ss-ov__visual">
+    <img src={withBase('/assets/smart-stock/parts/overview-mockup.png')} width="672" height="406" alt="PharmaCare on a laptop and phone" />
+  </div>
+</section>
+
+<style>
+  .ss-ov {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 75.039px 100px;
+    background: #fff;
+    overflow: hidden;
+    min-height: 517.02px;
+  }
+  .ss-ov__content { width: 675.352px; flex-shrink: 0; display: flex; flex-direction: column; gap: 24.013px; }
+  .ss-ov__text { display: flex; flex-direction: column; gap: 9.005px; }
+  .ss-ov__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 45.023px;
+    line-height: 1.19;
+    color: #311976;
+  }
+  .ss-ov__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18.009px;
+    line-height: 1.2;
+    color: #000;
+  }
+  .ss-ov__chips { display: flex; gap: 8.254px; flex-wrap: wrap; }
+  .chip {
+    background: #2381ff;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 10.505px;
+    line-height: 15.008px;
+    padding: 7.504px 12.006px;
+    border-radius: 75.039px;
+    white-space: nowrap;
+  }
+  /* Layout box matches Figma's 367px bg block; the mockup overflows it visually
+     (centered) without inflating the section height. */
+  .ss-ov__visual { flex-shrink: 0; height: 366.941px; display: flex; align-items: center; }
+  .ss-ov__visual img { height: 406px; width: auto; display: block; }
+
+  @media (max-width: 1040px) {
+    .ss-ov { flex-direction: column; align-items: flex-start; gap: 40px; padding: 56px clamp(20px, 5vw, 100px); }
+    .ss-ov__content { width: 100%; }
+    .ss-ov__title { font-size: clamp(30px, 5vw, 45px); }
+    .ss-ov__visual img { width: 100%; height: auto; max-width: 672px; }
+  }
+</style>

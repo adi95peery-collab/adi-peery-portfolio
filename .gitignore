@@ -1,0 +1,27 @@
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# playwright / visual testing
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# design references are large PNGs pulled from Figma — keep goldens, ignore scratch
+.design-refs/_scratch/
+tests/visual/**/actual/
+tests/visual/**/diff/
+
+# os / editor
+.DS_Store
+*.log
+.env
+.env.*
+.vscode/
+
+# handoff bundle (large; for transfer only)
+.handoff/
