@@ -6,16 +6,16 @@ import { withBase } from '../lib/base';
 ---
 
 <Base title="Page not found — Adi Peery">
+  <Header active="work" />
   <div class="page">
-    <Header active="work" />
     <main class="nf">
       <p class="nf__code">404</p>
       <h1 class="nf__title">This page wandered off.</h1>
       <p class="nf__sub">The page you’re looking for doesn’t exist.</p>
       <a class="nf__link" href={withBase('/')}>← Back to Home</a>
     </main>
-    <Footer />
   </div>
+  <Footer />
 </Base>
 
 <style>

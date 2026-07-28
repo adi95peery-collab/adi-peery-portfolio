@@ -21,7 +21,9 @@
     gap: 16px;
     align-items: center;
     justify-content: center;
-    padding: 0 100px;
+    /* Footer renders full-bleed (outside the 1440px page cap); match Header's
+       centering math so both stay aligned with the same content column. */
+    padding: 0 max(100px, calc((100vw - 1240px) / 2));
     height: 400px;
     background: rgba(255, 221, 238, 0.2);
   }

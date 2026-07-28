@@ -42,7 +42,22 @@ const RESUME_URL =
     align-items: center;
     justify-content: space-between;
     background: var(--color-bg-white);
-    padding: 24px 100px;
+    /* Header renders full-bleed (outside the 1440px page cap), so the inner
+       content needs its own centering math to stay aligned with the rest of
+       the (1240px-wide) content column instead of hugging the true viewport edge. */
+    padding: 24px max(100px, calc((100vw - 1240px) / 2));
+    position: relative;
+    z-index: 1;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 6px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0));
+    pointer-events: none;
   }
 
   .logo {

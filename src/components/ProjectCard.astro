@@ -29,9 +29,9 @@ const { eyebrow, title, description, href, cover, coverAlt, reverse = false } = 
       </svg>
     </a>
   </div>
-  <div class="card__cover">
+  <a class="card__cover" href={href} aria-label={`View case study: ${title}`}>
     <img src={cover} alt={coverAlt} width="450" height="371" loading="eager" />
-  </div>
+  </a>
 </article>
 
 <style>
@@ -96,13 +96,15 @@ const { eyebrow, title, description, href, cover, coverAlt, reverse = false } = 
   }
   .view-btn:hover .view-btn__arrow { transform: translateX(5px); }
 
-  .card__cover { width: 450px; height: 370.588px; flex-shrink: 0; }
+  .card__cover { display: block; width: 450px; height: 370.588px; flex-shrink: 0; overflow: hidden; }
   .card__cover img {
     width: 450px;
     height: 370.588px;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
   }
+  .card__cover:hover img { transform: scale(1.03); }
 
   /* --- Responsive: stack text over cover on narrow screens -------------- */
   @media (max-width: 860px) {
