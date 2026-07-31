@@ -9,15 +9,21 @@ import CaseStudySection from '../../components/CaseStudySection.astro';
 import Overview from '../../components/smart-stock/Overview.astro';
 import Challenge from '../../components/smart-stock/Challenge.astro';
 import Hero from '../../components/smart-stock/Hero.astro';
+import Wireframes from '../../components/smart-stock/Wireframes.astro';
 import Impact from '../../components/smart-stock/Impact.astro';
 import { withBase } from '../../lib/base';
 
 const A = withBase('/assets/smart-stock');
 // [src, alt, exactFigmaHeight] — visual-dominant sections kept as exact images
 // (app screens, dashboards, mind-map, style-guide board are true screenshots).
+// 04-research.png used to end with the "Wireframes" heading + two hard-cropped
+// screens baked into the flat image; that tail is cropped off here and rebuilt
+// as a real, horizontally-scrollable <Wireframes /> component below instead.
+const research: [string, string, number] = [
+  `${A}/04-research.png`, 'Research and ideation: user interviews, insights, and early concepts', 1210,
+];
 const sections: [string, string, number][] = [
-  [`${A}/04-research.png`, 'Research and ideation: user interviews, insights, and early concepts', 2025.35],
-  [`${A}/05a-wireframes.png`, 'Wireframes exploring the core flows', 1051.54],
+  [`${A}/05a-wireframes.png`, 'Workflow 1 — simplifying multi-supplier inventory ordering', 1051.54],
   [`${A}/05b-workflow01.png`, 'Workflow 1 — zoomed walkthrough of a key task', 1245.65],
   [`${A}/05c-workflow2.png`, 'Workflow 2 overview', 861.85],
   [`${A}/05d-flow2.png`, 'Workflow 2 — zoomed walkthrough', 1245.65],
@@ -38,6 +44,8 @@ const sections: [string, string, number][] = [
       <Hero />
       <Overview />
       <Challenge />
+      <CaseStudySection src={research[0]} alt={research[1]} height={research[2]} />
+      <Wireframes />
       {sections.map(([src, alt, h]) => (
         <CaseStudySection src={src} alt={alt} height={h} />
       ))}

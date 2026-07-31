@@ -1,0 +1,164 @@
+---
+// Smart Stock — Wireframes (real HTML + horizontal scroll). Previously the two
+// visible screens were hard-cropped into a flat image; now all 5 screens are
+// separate assets in a scrollable row so the rest are reachable, not just implied.
+import { withBase } from '../../lib/base';
+
+const W = withBase('/assets/smart-stock/wireframes');
+const screens: [string, string][] = [
+  [`${W}/dashboard.png`, 'Dashboard — real-time traffic, inventory status, and incoming shipments'],
+  [`${W}/order-page.png`, 'Inventory > My Orders — purchase order list'],
+  [`${W}/new-order-page.png`, 'Inventory > My Orders > New Order — browsing products to reorder'],
+  [`${W}/low-stock-order-page.png`, 'Low-stock item search results'],
+  [`${W}/pos.png`, 'Point of Sale — checkout'],
+];
+---
+
+<section class="ss-wf" data-fidelity="ss-wireframes" data-reveal>
+  <div class="ss-wf__text">
+    <h2 class="ss-wf__title">Wireframes</h2>
+    <p class="ss-wf__body">Based on the pain points identified during research, I focused on simplifying inventory workflows and reducing cognitive load for small retail teams. The following wireframes explore how core tasks can be handled within a single, clear interface.</p>
+  </div>
+  <div class="ss-wf__card">
+    <div class="ss-wf__scroll" data-wf-scroll>
+      {screens.map(([src, alt]) => (
+        <img src={src} alt={alt} decoding="async" />
+      ))}
+    </div>
+    <div class="ss-wf__nav">
+      <button type="button" class="ss-wf__arrow" data-wf-prev aria-label="Previous screen" disabled>
+        <svg viewBox="0 0 16.254 12.503" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#5A6573">
+            <path d="M10 12.503a.626.626 0 0 1-.444-1.07l5.188-5.18L9.556 1.07a.628.628 0 0 1 .888-.887l5.625 5.625a.626.626 0 0 1 0 .887l-5.625 5.625a.63.63 0 0 1-.444.182"/>
+            <path d="M15.625 6.878h-15a.625.625 0 0 1 0-1.25h15a.625.625 0 1 1 0 1.25"/>
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="ss-wf__arrow" data-wf-next aria-label="Next screen">
+        <svg viewBox="0 0 16.254 12.503" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#5A6573">
+            <path d="M10 12.503a.626.626 0 0 1-.444-1.07l5.188-5.18L9.556 1.07a.628.628 0 0 1 .888-.887l5.625 5.625a.626.626 0 0 1 0 .887l-5.625 5.625a.63.63 0 0 1-.444.182"/>
+            <path d="M15.625 6.878h-15a.625.625 0 0 1 0-1.25h15a.625.625 0 1 1 0 1.25"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Prev/Next buttons page through one screen at a time (scroll-snap handles
+  // the settle point); arrows disable at the ends instead of wrapping.
+  document.querySelectorAll<HTMLElement>('.ss-wf__card').forEach((card) => {
+    const scroller = card.querySelector<HTMLElement>('[data-wf-scroll]');
+    const prevBtn = card.querySelector<HTMLButtonElement>('[data-wf-prev]');
+    const nextBtn = card.querySelector<HTMLButtonElement>('[data-wf-next]');
+    if (!scroller || !prevBtn || !nextBtn) return;
+
+    const step = () => {
+      const img = scroller.querySelector('img');
+      const gap = parseFloat(getComputedStyle(scroller).columnGap || '0');
+      return (img?.getBoundingClientRect().width ?? 0) + gap;
+    };
+
+    const updateButtons = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      prevBtn.disabled = scroller.scrollLeft <= 2;
+      nextBtn.disabled = scroller.scrollLeft >= max - 2;
+    };
+
+    prevBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+    scroller.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    // Initial scrollWidth is unreliable until the images finish loading and
+    // lay out at their real size, so re-check as each one comes in.
+    scroller.querySelectorAll('img').forEach((img) => {
+      if (img.complete) updateButtons();
+      else img.addEventListener('load', updateButtons);
+    });
+    updateButtons();
+  });
+</script>
+
+<style>
+  .ss-wf {
+    --wf-pad-x: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 75.039px var(--wf-pad-x);
+    background: #ebf2ff;
+  }
+  .ss-wf__text { max-width: 675.352px; display: flex; flex-direction: column; gap: 9.005px; }
+  .ss-wf__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.19;
+    color: #311976;
+  }
+  .ss-wf__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #000;
+  }
+
+  /* The whole section (heading + images) now shares one continuous blue
+     background, so the card is just a bleed wrapper: it cancels the
+     section's own right padding so the scroll clip lands flush on the
+     section's true right edge (same alignment as the rest of the page)
+     instead of stopping short with a gap of blue after the cut. */
+  .ss-wf__card {
+    margin-right: calc(-1 * var(--wf-pad-x));
+    overflow: hidden;
+  }
+  .ss-wf__scroll {
+    display: flex;
+    gap: 32px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-right: var(--wf-pad-x);
+  }
+  .ss-wf__scroll::-webkit-scrollbar { display: none; }
+  .ss-wf__scroll img {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 560px;
+    max-width: 85vw;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .ss-wf__nav { display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px; padding-right: var(--wf-pad-x); }
+  .ss-wf__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+  }
+  .ss-wf__arrow svg { width: 16.25px; height: 12.5px; }
+  .ss-wf__arrow:first-child svg { transform: rotate(180deg); }
+  .ss-wf__arrow:disabled { opacity: 0.35; cursor: default; }
+  .ss-wf__arrow:not(:disabled):hover { opacity: 0.75; }
+
+  @media (max-width: 1040px) {
+    .ss-wf { --wf-pad-x: clamp(20px, 5vw, 100px); padding: 56px var(--wf-pad-x); }
+    .ss-wf__text { max-width: 100%; }
+    .ss-wf__scroll img { width: 85vw; }
+  }
+</style>

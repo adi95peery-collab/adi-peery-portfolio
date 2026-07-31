@@ -63,10 +63,8 @@ import { withBase } from '../../lib/base';
     border-radius: 75.039px;
     white-space: nowrap;
   }
-  /* Layout box matches Figma's 367px bg block; the mockup overflows it visually
-     (centered) without inflating the section height. */
   .ss-ov__visual { flex-shrink: 0; height: 366.941px; display: flex; align-items: center; }
-  .ss-ov__visual img { height: 406px; width: auto; display: block; }
+  .ss-ov__visual img { height: 100%; width: auto; display: block; }
 
   @media (max-width: 1040px) {
     .ss-ov { flex-direction: column; align-items: flex-start; gap: 40px; padding: 56px clamp(20px, 5vw, 100px); }
