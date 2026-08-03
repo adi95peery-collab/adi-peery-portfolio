@@ -56,6 +56,13 @@ html.motion [data-reveal] {
   will-change: opacity, transform;
 }
 
+/* Same idea, for elements that fade in one-by-one on a timer (not each on
+   its own scroll position) once their group scrolls into view. */
+html.motion [data-stagger-item] {
+  opacity: 0;
+  will-change: opacity;
+}
+
 /* Respect reduced-motion for all GSAP/CSS animation we add later. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

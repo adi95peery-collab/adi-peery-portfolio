@@ -1,0 +1,182 @@
+---
+// Baby Boost — Adaptive Onboarding Experience (real HTML + horizontal scroll).
+// Previously baked into the top of 04b-workflow01.png as 3 hard-cropped phone
+// screens; now all 15 onboarding screens are separate assets in a scrollable
+// row so the rest of the flow is reachable, not just implied.
+import { withBase } from '../../lib/base';
+
+const O = withBase('/assets/baby-boost/onboarding');
+const screens: [string, string][] = [
+  [`${O}/track-development.png`, 'Track your child’s development'],
+  [`${O}/not-alone.png`, 'You’re not doing this alone'],
+  [`${O}/activities-made.png`, 'Activities made for your child'],
+  [`${O}/welcome-signup.png`, 'Welcome to Baby Boost — sign-up options'],
+  [`${O}/create-account.png`, 'Create your account'],
+  [`${O}/hi-johan.png`, 'Create your child’s profile'],
+  [`${O}/lets-get-to-know.png`, 'Let’s get to know your child'],
+  [`${O}/what-does-enjoy.png`, 'What does your child enjoy'],
+  [`${O}/when-are-you.png`, 'When are you with your child'],
+  [`${O}/what-to-focus-on.png`, 'What would you like to focus on right now'],
+  [`${O}/communication.png`, 'Communication check-in'],
+  [`${O}/social-emotional.png`, 'Social and emotional check-in'],
+  [`${O}/motor-skills.png`, 'Motor skills check-in'],
+  [`${O}/how-long-activities.png`, 'How long your child enjoys activities'],
+  [`${O}/setting-up-program.png`, 'Setting up your child’s program'],
+];
+---
+<section class="bb-ob" data-fidelity="bb-onboarding" data-reveal>
+  <div class="bb-ob__text">
+    <h2 class="bb-ob__title">Adaptive Onboarding Experience</h2>
+    <p class="bb-ob__body">A calm onboarding flow that learns about each child and creates a <strong>personalized developmental journey</strong> from the very <strong>first interaction</strong>.</p>
+    <p class="bb-ob__tags">Personalized Support &bull; Calm Experience &bull; Development Through Play</p>
+  </div>
+  <div class="bb-ob__visual">
+    <div class="bb-ob__scroll" data-ob-scroll>
+      {screens.map(([src, alt]) => (
+        <img src={src} alt={alt} loading="eager" decoding="async" />
+      ))}
+    </div>
+    <div class="bb-ob__nav">
+      <button type="button" class="bb-ob__arrow" data-ob-prev aria-label="Previous screen" disabled>
+        <svg viewBox="0 0 16.254 12.503" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#191e76">
+            <path d="M10 12.503a.626.626 0 0 1-.444-1.07l5.188-5.18L9.556 1.07a.628.628 0 0 1 .888-.887l5.625 5.625a.626.626 0 0 1 0 .887l-5.625 5.625a.63.63 0 0 1-.444.182"/>
+            <path d="M15.625 6.878h-15a.625.625 0 0 1 0-1.25h15a.625.625 0 1 1 0 1.25"/>
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="bb-ob__arrow" data-ob-next aria-label="Next screen">
+        <svg viewBox="0 0 16.254 12.503" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#191e76">
+            <path d="M10 12.503a.626.626 0 0 1-.444-1.07l5.188-5.18L9.556 1.07a.628.628 0 0 1 .888-.887l5.625 5.625a.626.626 0 0 1 0 .887l-5.625 5.625a.63.63 0 0 1-.444.182"/>
+            <path d="M15.625 6.878h-15a.625.625 0 0 1 0-1.25h15a.625.625 0 1 1 0 1.25"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Prev/Next buttons page through the onboarding screens one at a time;
+  // arrows disable at the ends instead of wrapping. Same pattern as the
+  // Smart Stock Wireframes scroller.
+  document.querySelectorAll<HTMLElement>('.bb-ob').forEach((section) => {
+    const scroller = section.querySelector<HTMLElement>('[data-ob-scroll]');
+    const prevBtn = section.querySelector<HTMLButtonElement>('[data-ob-prev]');
+    const nextBtn = section.querySelector<HTMLButtonElement>('[data-ob-next]');
+    if (!scroller || !prevBtn || !nextBtn) return;
+
+    const step = () => {
+      const img = scroller.querySelector('img');
+      const gap = parseFloat(getComputedStyle(scroller).columnGap || '0');
+      return (img?.getBoundingClientRect().width ?? 0) + gap;
+    };
+
+    const updateButtons = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      prevBtn.disabled = scroller.scrollLeft <= 2;
+      nextBtn.disabled = scroller.scrollLeft >= max - 2;
+    };
+
+    prevBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+    scroller.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    scroller.querySelectorAll('img').forEach((img) => {
+      if (img.complete) updateButtons();
+      else img.addEventListener('load', updateButtons);
+    });
+    updateButtons();
+  });
+</script>
+
+<style>
+  .bb-ob {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 157.5px;
+    padding: 75.039px 100px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .bb-ob__text {
+    width: 475.75px;
+    margin-left: 51.75px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bb-ob__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.19;
+    letter-spacing: -0.3px;
+    color: #191e76;
+    white-space: nowrap;
+  }
+  .bb-ob__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18.009px;
+    line-height: 1.3;
+    color: #000;
+  }
+  .bb-ob__body strong { font-weight: 700; }
+  .bb-ob__tags {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 15px;
+    color: #2151d1;
+    white-space: nowrap;
+  }
+
+  .bb-ob__visual { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+  .bb-ob__nav { display: flex; gap: 12px; justify-content: flex-end; }
+  .bb-ob__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #e8ecfc;
+    box-shadow: 0 2px 6px rgba(25, 30, 118, 0.1);
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+  }
+  .bb-ob__arrow svg { width: 16.25px; height: 12.5px; }
+  .bb-ob__arrow:first-child svg { transform: rotate(180deg); }
+  .bb-ob__arrow:disabled { opacity: 0.35; cursor: default; }
+  .bb-ob__arrow:not(:disabled):hover { opacity: 0.75; }
+
+  .bb-ob__scroll {
+    display: flex;
+    gap: 23.5px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .bb-ob__scroll::-webkit-scrollbar { display: none; }
+  .bb-ob__scroll img {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 209px;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 1100px) {
+    .bb-ob { flex-direction: column; align-items: flex-start; padding: 56px clamp(20px, 5vw, 51.75px); gap: 32px; }
+    .bb-ob__text { width: 100%; }
+    .bb-ob__scroll { width: 100%; }
+    .bb-ob__scroll img { width: 180px; }
+  }
+</style>

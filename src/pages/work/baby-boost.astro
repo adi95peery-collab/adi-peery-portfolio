@@ -6,16 +6,24 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import CaseStudySection from '../../components/CaseStudySection.astro';
 import Overview from '../../components/baby-boost/Overview.astro';
+import Onboarding from '../../components/baby-boost/Onboarding.astro';
+import PersonalizedJourney from '../../components/baby-boost/PersonalizedJourney.astro';
 import Impact from '../../components/baby-boost/Impact.astro';
 import { withBase } from '../../lib/base';
 
 const A = withBase('/assets/baby-boost');
 const hero: [string, string, number] = [`${A}/01-hero.png`, 'Baby Boost — a parenting app, hero', 655.32];
 // Visual-dominant sections kept as exact images (app screens + illustrations).
-const mid: [string, string, number][] = [
+// 04b-workflow01.png used to start with the "Adaptive Onboarding Experience"
+// heading + 3 hard-cropped phone screens baked into the flat image; that head
+// is cropped off here and rebuilt as a real, horizontally-scrollable
+// <Onboarding /> component above instead (all 15 screens, not just 3).
+const beforeOnboarding: [string, string, number][] = [
   [`${A}/03-research.png`, 'Research and ideation', 2135.94],
   [`${A}/04a-wireframes.png`, 'Wireframes for the core flows', 1049.07],
-  [`${A}/04b-workflow01.png`, 'Workflow 01 — a guided walkthrough', 1728.91],
+];
+const afterOnboarding: [string, string, number][] = [
+  [`${A}/04b-workflow01.png`, 'Guided activity experience', 602.5],
   [`${A}/04c-journey.png`, 'Journey and milestones', 2182.51],
   [`${A}/04d-beyond.png`, 'Beyond the activity', 2131.19],
   [`${A}/04e-ai-collab.png`, 'AI collaboration and the illustration system', 3434.22],
@@ -30,7 +38,12 @@ const mid: [string, string, number][] = [
       <h1 class="sr-only">Baby Boost — a parenting app</h1>
       <CaseStudySection src={hero[0]} alt={hero[1]} height={hero[2]} eager={true} />
       <Overview />
-      {mid.map(([src, alt, h]) => (
+      {beforeOnboarding.map(([src, alt, h]) => (
+        <CaseStudySection src={src} alt={alt} height={h} />
+      ))}
+      <Onboarding />
+      <PersonalizedJourney />
+      {afterOnboarding.map(([src, alt, h]) => (
         <CaseStudySection src={src} alt={alt} height={h} />
       ))}
       <Impact />

@@ -1,0 +1,173 @@
+---
+// Baby Boost — Personalized Daily Journey (real HTML). Previously baked into
+// 04b-workflow01.png as a flat image with the floating activity cards always
+// visible; now the phone is a real image but the 3 activity-card callouts are
+// separate elements that stagger in on a 1s timer once scrolled into view,
+// matching the "After delay" prototype interaction in Figma 1:1.
+import { withBase } from '../../lib/base';
+
+const J = withBase('/assets/baby-boost/journey');
+// The phone + floating cards are shifted right of their original Figma
+// positions (by PHONE_SHIFT) to open up breathing room between them and the
+// text column — a deliberate deviation from the 1:1 layout, not a fidelity
+// bug.
+const PHONE_SHIFT = 90;
+const floatingCards: [string, string, { left: number; top: number }][] = [
+  [`${J}/card-ball-movement.png`, 'Ball Movement — Cognitive, 10-15 min, completed', { left: 907 + PHONE_SHIFT, top: 241 }],
+  [`${J}/card-hand-arms.png`, 'Hand & Arms — Motor Skills, 10-15 min, in progress', { left: 927.58 + PHONE_SHIFT, top: 314.29 }],
+  [`${J}/card-animals-sounds.png`, 'Animals Sounds — Language, 10-15 min, locked', { left: 958.09 + PHONE_SHIFT, top: 387.29 }],
+];
+const labels: [string, { left: number; top: number }][] = [
+  ['Monthly Progress', { left: 550 + PHONE_SHIFT, top: 104 }],
+  ['Daily Activities Cards', { left: 878 + PHONE_SHIFT, top: 195 }],
+  ['Visual Growth Journey', { left: 511 + PHONE_SHIFT, top: 327 }],
+];
+---
+<section class="bb-jr" data-fidelity="bb-journey" data-reveal>
+  <div class="bb-jr__viewport" data-jr-viewport>
+    <div class="bb-jr__bg"></div>
+    <div class="bb-jr__stage" data-stagger-group data-stagger-interval="1">
+      <div class="bb-jr__card">
+        <div class="bb-jr__text">
+          <h2 class="bb-jr__title">Personalized Daily Journey</h2>
+          <p class="bb-jr__body">A personalized home experience that surfaces <strong>age-appropriate</strong> activities, developmental progress, and <strong>daily recommendations</strong> tailored to the child's stage.</p>
+          <div class="bb-jr__tags">
+            <span>Personalized Activities</span><span aria-hidden="true">&bull;</span>
+            <span>Daily Progress</span><span aria-hidden="true">&bull;</span>
+            <span>Adaptive Recommendations</span>
+          </div>
+        </div>
+        <img class="bb-jr__phone" src={`${J}/phone.png`} width="185.813" height="402" style={`left:${699.58 + PHONE_SHIFT}px`} alt="Baby Boost home screen — Daniel's weekly progress and today's activities" />
+        {labels.map(([text, pos]) => (
+          <div class="bb-jr__label" style={`left:${pos.left}px;top:${pos.top}px`}>{text}</div>
+        ))}
+      </div>
+      {floatingCards.map(([src, alt, pos]) => (
+        <img class="bb-jr__float-card" data-stagger-item src={src} alt={alt} style={`left:${pos.left}px;top:${pos.top}px`} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // The stage is a fixed 1266x480 design canvas; scale it uniformly to fit
+  // its column instead of letting individual children reflow, so every
+  // element (phone, labels, floating cards) keeps its exact relative
+  // position and size at any viewport width.
+  document.querySelectorAll<HTMLElement>('[data-jr-viewport]').forEach((viewport) => {
+    const stage = viewport.querySelector<HTMLElement>('.bb-jr__stage');
+    if (!stage) return;
+    const DESIGN_WIDTH = 1266;
+    const DESIGN_HEIGHT = 480;
+    const applyScale = () => {
+      const scale = Math.min(1, viewport.clientWidth / DESIGN_WIDTH);
+      stage.style.transform = `scale(${scale})`;
+      // The background box's height follows the content's scale (so it
+      // shrinks along with the phone/text on narrow screens); its width is
+      // just whatever the section's padding leaves it (symmetric on both
+      // sides), with any extra space showing as plain background rather
+      // than stretching the phone/cards.
+      viewport.style.height = `${DESIGN_HEIGHT * scale}px`;
+    };
+    new ResizeObserver(applyScale).observe(viewport);
+    applyScale();
+  });
+</script>
+
+<style>
+  .bb-jr {
+    padding: 75.039px 100px;
+    background: #fff;
+  }
+  .bb-jr__viewport {
+    position: relative;
+    width: 100%;
+  }
+  .bb-jr__bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* Narrower than the viewport so the floating cards on the right spill
+       out past the edge instead of the background trailing all the way
+       under them — a deliberate deviation from a plain full-width box. */
+    width: calc(100% - 70px);
+    height: 100%;
+    background: #ebf2ff;
+    border-radius: 16px;
+  }
+  .bb-jr__stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1266px;
+    height: 480px;
+    transform-origin: top left;
+  }
+  .bb-jr__text {
+    position: absolute;
+    left: 51.75px;
+    top: 165.496px;
+    width: 422.887px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .bb-jr__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 26.681px;
+    line-height: 1.2;
+    color: #311976;
+  }
+  .bb-jr__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #000;
+  }
+  .bb-jr__body strong { font-weight: 700; }
+  .bb-jr__tags {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-family: var(--font-sf);
+    font-size: 14px;
+    line-height: 1.5;
+    color: #072281;
+    white-space: nowrap;
+  }
+
+  .bb-jr__phone {
+    position: absolute;
+    top: 32px;
+    width: 185.813px;
+    height: auto;
+    display: block;
+  }
+
+  .bb-jr__label {
+    position: absolute;
+    background: #fff;
+    padding: 8px;
+    border-radius: 12.006px;
+    box-shadow: 0 0 1.334px rgba(0, 0, 0, 0.04), 0 5.336px 5.336px rgba(0, 0, 0, 0.08);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1;
+    color: #001154;
+    white-space: nowrap;
+  }
+
+  .bb-jr__float-card {
+    position: absolute;
+    width: 217.91px;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 1400px) {
+    .bb-jr { padding: 56px clamp(20px, 5vw, 100px); }
+  }
+</style>

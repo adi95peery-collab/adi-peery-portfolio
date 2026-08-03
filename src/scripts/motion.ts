@@ -24,6 +24,29 @@ export function initMotion(): void {
     });
   });
 
+  // --- Staggered card reveals (e.g. the floating activity cards next to
+  // the Personalized Daily Journey phone) — once the group scrolls into
+  // view, each [data-stagger-item] child reveals on a fixed interval
+  // (matching Figma's "after delay" prototype timing), then the whole
+  // group fades out and the cycle repeats for as long as the section
+  // stays on screen.
+  gsap.utils.toArray<HTMLElement>('[data-stagger-group]').forEach((group) => {
+    const items = gsap.utils.toArray<HTMLElement>('[data-stagger-item]', group);
+    const interval = Number(group.dataset.staggerInterval) || 1;
+    ScrollTrigger.create({
+      trigger: group,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.6 });
+        items.forEach((item, i) => {
+          tl.to(item, { opacity: 1, duration: 0.3, ease: 'power1.out' }, i * interval);
+        });
+        tl.to(items, { opacity: 0, duration: 0.4, ease: 'power1.in' }, '+=1.2');
+      },
+    });
+  });
+
   // --- AP logo draw-on ---------------------------------------------------
   const logoPath = document.querySelector<SVGPathElement>('.logo__mark path');
   if (logoPath) {
