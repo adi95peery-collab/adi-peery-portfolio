@@ -1,0 +1,193 @@
+---
+// Baby Boost — Parenting Support Library (real HTML). Same pattern as
+// PersonalizedJourney.astro: previously baked into 04d-beyond.png as a flat
+// image with the "Articles / Podcast / Expert Tips / Video Guides" chips
+// always visible; now the phone is a real image and the 4 chips are
+// separate elements that stagger in on a loop once scrolled into view.
+import { withBase } from '../../lib/base';
+
+const L = withBase('/assets/baby-boost/library');
+// Shifted right of their original Figma positions (by PHONE_SHIFT) to open
+// up breathing room between them and the text column, matching the same
+// deliberate deviation used in PersonalizedJourney.astro.
+const PHONE_SHIFT = 90;
+const chips: [string, string, { left: number; top: number }][] = [
+  [`${L}/icon-file.svg`, 'Articles', { left: 907 + PHONE_SHIFT, top: 201 }],
+  [`${L}/icon-mic.svg`, 'Podcast', { left: 927 + PHONE_SHIFT, top: 254 }],
+  [`${L}/icon-bulb.svg`, 'Expert Tips', { left: 942 + PHONE_SHIFT, top: 307 }],
+  [`${L}/icon-video.svg`, 'Video Guides', { left: 960 + PHONE_SHIFT, top: 367 }],
+];
+const labels: [string, { left: number; top: number }][] = [
+  ['Smart Discovery', { left: 559 + PHONE_SHIFT, top: 102 }],
+  ['Learning Formats', { left: 878 + PHONE_SHIFT, top: 149 }],
+  ['Continuous Learning', { left: 526 + PHONE_SHIFT, top: 328 }],
+];
+---
+<section class="bb-lib" data-fidelity="bb-library" data-reveal>
+  <div class="bb-lib__viewport" data-lib-viewport>
+    <div class="bb-lib__bg"></div>
+    <div class="bb-lib__stage" data-stagger-group data-stagger-interval="1">
+      <div class="bb-lib__card">
+        <div class="bb-lib__text">
+          <h2 class="bb-lib__title">Parenting Support Library</h2>
+          <p class="bb-lib__body">A curated library of articles, podcasts, and videos that provides <strong>age-appropriate guidance</strong> and <strong>trusted developmental insights</strong>.</p>
+          <div class="bb-lib__tags">
+            <span>Parent Support</span><span aria-hidden="true">&bull;</span>
+            <span>Educational Content</span><span aria-hidden="true">&bull;</span>
+            <span>Age-Based Guidance</span>
+          </div>
+        </div>
+        <img class="bb-lib__phone" src={`${L}/phone.png`} width="184.507" height="400" style={`left:${699.578 + PHONE_SHIFT}px`} alt="Baby Boost parenting library screen — recommended articles, podcasts, and videos" />
+        {labels.map(([text, pos]) => (
+          <div class="bb-lib__label" style={`left:${pos.left}px;top:${pos.top}px`}>{text}</div>
+        ))}
+      </div>
+      {chips.map(([icon, text, pos]) => (
+        <div class="bb-lib__chip" data-stagger-item style={`left:${pos.left}px;top:${pos.top}px`}>
+          <img src={icon} alt="" />
+          <span>{text}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // The stage is a fixed 1266x480 design canvas; scale it uniformly to fit
+  // its column instead of letting individual children reflow, so every
+  // element (phone, labels, chips) keeps its exact relative position and
+  // size at any viewport width.
+  document.querySelectorAll<HTMLElement>('[data-lib-viewport]').forEach((viewport) => {
+    const stage = viewport.querySelector<HTMLElement>('.bb-lib__stage');
+    if (!stage) return;
+    const DESIGN_WIDTH = 1266;
+    const DESIGN_HEIGHT = 480;
+    const applyScale = () => {
+      const scale = Math.min(1, viewport.clientWidth / DESIGN_WIDTH);
+      stage.style.transform = `scale(${scale})`;
+      viewport.style.height = `${DESIGN_HEIGHT * scale}px`;
+    };
+    new ResizeObserver(applyScale).observe(viewport);
+    applyScale();
+  });
+</script>
+
+<style>
+  .bb-lib {
+    padding: 75.039px 100px;
+    background: #fff;
+  }
+  .bb-lib__viewport {
+    position: relative;
+    width: 100%;
+  }
+  .bb-lib__bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* Narrower than the viewport so the chips on the right spill out past
+       the edge instead of the background trailing all the way under them —
+       matching the same treatment as Personalized Journey. */
+    width: calc(100% - 70px);
+    height: 100%;
+    background: #ebf2ff;
+    border-radius: 16px;
+  }
+  .bb-lib__stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1266px;
+    height: 480px;
+    transform-origin: top left;
+  }
+  .bb-lib__text {
+    position: absolute;
+    left: 51.75px;
+    top: 164.496px;
+    width: 422.887px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .bb-lib__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 26.681px;
+    line-height: 1.2;
+    color: #311976;
+  }
+  .bb-lib__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #000;
+  }
+  .bb-lib__body strong { font-weight: 700; }
+  .bb-lib__tags {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-family: var(--font-sf);
+    font-size: 14px;
+    line-height: 1.5;
+    color: #072281;
+    white-space: nowrap;
+  }
+
+  .bb-lib__phone {
+    position: absolute;
+    top: 32px;
+    width: 184.507px;
+    height: auto;
+    display: block;
+  }
+
+  .bb-lib__label {
+    position: absolute;
+    background: #fff;
+    padding: 8px;
+    border-radius: 12.006px;
+    box-shadow: 0 0 1.334px rgba(0, 0, 0, 0.04), 0 5.336px 5.336px rgba(0, 0, 0, 0.08);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1;
+    color: #001154;
+    white-space: nowrap;
+  }
+
+  .bb-lib__chip {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 9.47px;
+    background: #fff;
+    border: 0.528px solid #dfe5ef;
+    border-radius: 12px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.04), 0 4px 4px rgba(0, 0, 0, 0.06);
+    white-space: nowrap;
+  }
+  .bb-lib__chip img {
+    /* The 4 icons aren't all square in their native SVG (e.g. the file icon
+       is 13.2x15.1) — force-fitting to a 16x16 box stretched them, so scale
+       within the box instead of filling it. */
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+  }
+  .bb-lib__chip span {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    color: #1f3e6e;
+  }
+
+  @media (max-width: 1400px) {
+    .bb-lib { padding: 56px clamp(20px, 5vw, 100px); }
+  }
+</style>

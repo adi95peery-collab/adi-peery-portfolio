@@ -8,24 +8,29 @@ import CaseStudySection from '../../components/CaseStudySection.astro';
 import Overview from '../../components/baby-boost/Overview.astro';
 import Onboarding from '../../components/baby-boost/Onboarding.astro';
 import PersonalizedJourney from '../../components/baby-boost/PersonalizedJourney.astro';
+import ActivityFlow from '../../components/baby-boost/ActivityFlow.astro';
+import Library from '../../components/baby-boost/Library.astro';
 import Impact from '../../components/baby-boost/Impact.astro';
 import { withBase } from '../../lib/base';
 
 const A = withBase('/assets/baby-boost');
 const hero: [string, string, number] = [`${A}/01-hero.png`, 'Baby Boost — a parenting app, hero', 655.32];
 // Visual-dominant sections kept as exact images (app screens + illustrations).
-// 04b-workflow01.png used to start with the "Adaptive Onboarding Experience"
-// heading + 3 hard-cropped phone screens baked into the flat image; that head
-// is cropped off here and rebuilt as a real, horizontally-scrollable
-// <Onboarding /> component above instead (all 15 screens, not just 3).
+// 04b-workflow01.png (the old "Adaptive Onboarding Experience" + "Guided
+// activity experience" flat image) has been fully replaced by the real
+// <Onboarding /> and <ActivityFlow /> components below.
 const beforeOnboarding: [string, string, number][] = [
   [`${A}/03-research.png`, 'Research and ideation', 2135.94],
   [`${A}/04a-wireframes.png`, 'Wireframes for the core flows', 1049.07],
 ];
-const afterOnboarding: [string, string, number][] = [
-  [`${A}/04b-workflow01.png`, 'Guided activity experience', 602.5],
+const afterJourney: [string, string, number][] = [
   [`${A}/04c-journey.png`, 'Journey and milestones', 2182.51],
-  [`${A}/04d-beyond.png`, 'Beyond the activity', 2131.19],
+  // 04d-beyond.png used to continue into the "Parenting support library"
+  // section baked into the flat image; that part is cropped off here and
+  // rebuilt as a real <Library /> component below instead.
+  [`${A}/04d-beyond.png`, 'Beyond the activity', 1525],
+];
+const afterLibrary: [string, string, number][] = [
   [`${A}/04e-ai-collab.png`, 'AI collaboration and the illustration system', 3434.22],
 ];
 ---
@@ -43,7 +48,12 @@ const afterOnboarding: [string, string, number][] = [
       ))}
       <Onboarding />
       <PersonalizedJourney />
-      {afterOnboarding.map(([src, alt, h]) => (
+      <ActivityFlow />
+      {afterJourney.map(([src, alt, h]) => (
+        <CaseStudySection src={src} alt={alt} height={h} />
+      ))}
+      <Library />
+      {afterLibrary.map(([src, alt, h]) => (
         <CaseStudySection src={src} alt={alt} height={h} />
       ))}
       <Impact />
