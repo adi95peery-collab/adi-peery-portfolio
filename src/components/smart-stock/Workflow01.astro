@@ -1,0 +1,83 @@
+---
+// Smart Stock — Workflow #01 (real video embed). The section is the exact
+// Figma export (05a-wireframes.png), completely untouched — heading, eyebrow,
+// title, body copy, light-blue card, all of it. The one dynamic piece is the
+// app-screen mockup inside the card: a real screen recording plays there
+// instead of the flat screenshot, cropped to exactly the screenshot's own
+// bounds (655-2224px × 997-2013px of this 2880x2104 canvas, measured
+// directly against the flat image — matches the recording's own 1996x1288
+// aspect ratio almost exactly) so it reads as part of the same static
+// artwork rather than a separate video player bolted on top.
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/smart-stock');
+const V = withBase('/assets/smart-stock/video');
+const DESIGN_WIDTH = 1440;
+const DESIGN_HEIGHT = 1052;
+---
+<section class="ss-w1" data-fidelity="ss-workflow-01" data-reveal>
+  <div class="ss-w1__frame">
+    <img class="ss-w1__image" src={`${A}/05a-wireframes.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="Workflow #01 — simplifying multi-supplier inventory ordering into a single, intuitive flow." loading="lazy" decoding="async" />
+    <video
+      class="ss-w1__video"
+      src={`${V}/workflow-01-flow.mp4`}
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+      aria-label="Screen recording: browsing suppliers and creating a purchase order in Smart Stock"
+    />
+  </div>
+</section>
+
+<script>
+  // Skip the recording's first second so the flow reads as already in
+  // motion instead of starting on its dead opening frame — on both the
+  // initial load and every loop cycle. Looping via `timeupdate` (jumping
+  // back just before the true end) rather than the native `loop`
+  // attribute, since native loop would restart at 0 instead of this offset.
+  const START_OFFSET = 1;
+  const LOOP_MARGIN = 0.15;
+  document.querySelectorAll<HTMLVideoElement>('.ss-w1__video').forEach((video) => {
+    const start = () => { video.currentTime = START_OFFSET; };
+    if (video.readyState >= 1) start();
+    else video.addEventListener('loadedmetadata', start, { once: true });
+    video.addEventListener('timeupdate', () => {
+      if (video.duration && video.currentTime >= video.duration - LOOP_MARGIN) {
+        video.currentTime = START_OFFSET;
+      }
+    });
+    video.addEventListener('seeked', () => {
+      if (video.paused) video.play();
+    });
+  });
+</script>
+
+<style>
+  .ss-w1 {
+    background: #fff;
+  }
+  .ss-w1__frame {
+    position: relative;
+    width: 100%;
+  }
+  .ss-w1__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .ss-w1__video {
+    position: absolute;
+    left: 22.743%;
+    top: 47.386%;
+    width: 54.479%;
+    height: 48.289%;
+    display: block;
+    object-fit: cover;
+    /* Figma: 4.5px corner radius on this screen layer (measured at the
+       1440px design width, same convention as the rest of the codebase's
+       fixed-px radii on fluid-width frames, e.g. GrowthJourney's phone
+       panel). */
+    border-radius: 4.5px;
+  }
+</style>

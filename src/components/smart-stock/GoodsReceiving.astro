@@ -1,0 +1,68 @@
+---
+// Smart Stock — Smart Goods Receiving (real video embed). Same treatment as
+// Workflow01/02.astro, but the mockup here is a phone (not a rectangular
+// dashboard screen), and the source clip is a transparent-background WebM
+// of just the iPhone itself (bezel included, real alpha channel — verified
+// in-browser: corners decode to alpha 0, body to alpha 255). Since the clip
+// carries its own rounded-corner mask, the flat image's static phone can't
+// just be covered by an opaque crop like the other two — it's erased first
+// with a solid rect matching the card's own blue (#ebf2ff, used elsewhere:
+// Wireframes.astro, Baby Boost's Library/PersonalizedJourney), then the
+// video is laid on top at the same spot so its transparent edges blend
+// into that same blue rather than exposing the old static phone underneath.
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/smart-stock');
+const V = withBase('/assets/smart-stock/video');
+const DESIGN_WIDTH = 1440;
+const DESIGN_HEIGHT = 871.5;
+---
+<section class="ss-gr" data-fidelity="ss-goods-receiving" data-reveal>
+  <div class="ss-gr__frame">
+    <img class="ss-gr__image" src={`${A}/05f-app.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="Smart Goods Receiving — a fast and intuitive receiving flow that lets staff scan invoices or delivery notes, automatically update inventory levels, and confirm incoming stock." loading="lazy" decoding="async" />
+    <div class="ss-gr__erase" aria-hidden="true"></div>
+    <video
+      class="ss-gr__video"
+      src={`${V}/goods-receiving-phone.webm`}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-label="Screen recording: scanning a delivery and confirming incoming stock in Smart Stock"
+    />
+  </div>
+</section>
+
+<style>
+  .ss-gr {
+    background: #fff;
+  }
+  .ss-gr__frame {
+    position: relative;
+    width: 100%;
+  }
+  .ss-gr__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .ss-gr__erase {
+    /* Covers the flat image's own static phone mockup so the video's
+       transparent (rounded-corner) pixels reveal this instead of it. */
+    position: absolute;
+    left: 41.806%;
+    top: 31.786%;
+    width: 16.354%;
+    height: 55.020%;
+    background: #ebf2ff;
+  }
+  .ss-gr__video {
+    position: absolute;
+    left: 42.083%;
+    top: 32.243%;
+    width: 15.799%;
+    height: 54.045%;
+    display: block;
+  }
+</style>

@@ -10,6 +10,9 @@ import Overview from '../../components/smart-stock/Overview.astro';
 import Challenge from '../../components/smart-stock/Challenge.astro';
 import Hero from '../../components/smart-stock/Hero.astro';
 import Wireframes from '../../components/smart-stock/Wireframes.astro';
+import Workflow01 from '../../components/smart-stock/Workflow01.astro';
+import Workflow02 from '../../components/smart-stock/Workflow02.astro';
+import GoodsReceiving from '../../components/smart-stock/GoodsReceiving.astro';
 import Impact from '../../components/smart-stock/Impact.astro';
 import { withBase } from '../../lib/base';
 
@@ -22,13 +25,14 @@ const A = withBase('/assets/smart-stock');
 const research: [string, string, number] = [
   `${A}/04-research.png`, 'Research and ideation: user interviews, insights, and early concepts', 1210,
 ];
-const sections: [string, string, number][] = [
-  [`${A}/05a-wireframes.png`, 'Workflow 1 — simplifying multi-supplier inventory ordering', 1051.54],
+const afterWorkflow1: [string, string, number][] = [
   [`${A}/05b-workflow01.png`, 'Workflow 1 — zoomed walkthrough of a key task', 1245.65],
-  [`${A}/05c-workflow2.png`, 'Workflow 2 overview', 861.85],
+];
+const afterWorkflow2: [string, string, number][] = [
   [`${A}/05d-flow2.png`, 'Workflow 2 — zoomed walkthrough', 1245.65],
   [`${A}/05e-dashboard.png`, 'The Smart Stock dashboard design', 1669.62],
-  [`${A}/05f-app.png`, 'The companion app screens', 871.45],
+];
+const afterGoodsReceiving: [string, string, number][] = [
   [`${A}/06-design-system.png`, 'Design system and style guide', 1173.38],
 ];
 ---
@@ -46,7 +50,16 @@ const sections: [string, string, number][] = [
       <Challenge />
       <CaseStudySection src={research[0]} alt={research[1]} height={research[2]} />
       <Wireframes />
-      {sections.map(([src, alt, h]) => (
+      <Workflow01 />
+      {afterWorkflow1.map(([src, alt, h]) => (
+        <CaseStudySection src={src} alt={alt} height={h} />
+      ))}
+      <Workflow02 />
+      {afterWorkflow2.map(([src, alt, h]) => (
+        <CaseStudySection src={src} alt={alt} height={h} />
+      ))}
+      <GoodsReceiving />
+      {afterGoodsReceiving.map(([src, alt, h]) => (
         <CaseStudySection src={src} alt={alt} height={h} />
       ))}
       <Impact />

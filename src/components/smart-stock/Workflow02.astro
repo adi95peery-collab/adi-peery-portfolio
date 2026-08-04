@@ -1,0 +1,55 @@
+---
+// Smart Stock — Workflow #02 (real video embed). Same treatment as
+// Workflow01.astro: the flat Figma export (05c-workflow2.png) stays
+// completely untouched — heading, eyebrow, title, body copy, light-blue
+// card, all of it. A real screen recording plays inside the card, cropped
+// to exactly the flat screenshot's own bounds (654-2224px × 613-1633px of
+// this 2880x1724 canvas, measured directly against the flat image).
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/smart-stock');
+const V = withBase('/assets/smart-stock/video');
+const DESIGN_WIDTH = 1440;
+const DESIGN_HEIGHT = 862;
+---
+<section class="ss-w2" data-fidelity="ss-workflow-02" data-reveal>
+  <div class="ss-w2__frame">
+    <img class="ss-w2__image" src={`${A}/05c-workflow2.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="Workflow #02 — the Point of Sale experience: a lightweight POS interface for fast checkout, visual product search, customer creation, flexible payments, and receipts." loading="lazy" decoding="async" />
+    <video
+      class="ss-w2__video"
+      src={`${V}/workflow-02-flow.mp4`}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-label="Screen recording: the Point of Sale checkout flow in Smart Stock"
+    />
+  </div>
+</section>
+
+<style>
+  .ss-w2 {
+    background: #fff;
+  }
+  .ss-w2__frame {
+    position: relative;
+    width: 100%;
+  }
+  .ss-w2__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .ss-w2__video {
+    position: absolute;
+    left: 22.708%;
+    top: 35.556%;
+    width: 54.514%;
+    height: 59.164%;
+    display: block;
+    object-fit: cover;
+    /* Figma: 4.5px corner radius on this screen layer, same as Workflow01. */
+    border-radius: 4.5px;
+  }
+</style>
