@@ -106,7 +106,10 @@ const screens: [string, string][] = [
        carrying both would double the visible gap to ~150px. */
     padding: 75.039px 100px 0;
     background: #fff;
-    overflow: hidden;
+    /* No overflow:hidden here (unlike a plain image section) — the nav
+       arrows below the scroller have their own box-shadow bleed, and this
+       section's zero bottom padding left no room for it; .bb-ob__scroll's
+       own overflow-x:auto already clips the horizontally-scrolling images. */
   }
   .bb-ob__text {
     width: 475.75px;
