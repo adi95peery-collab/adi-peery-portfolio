@@ -37,12 +37,17 @@ import { withBase } from '../../lib/base';
     align-items: center;
     padding: 112.5px 100px;
     /* Must be at least the illustration's own height (871px) — it's
-       vertically centered via .bb-ov__illus, so if the section is any
-       shorter, overflow:hidden clips equal slices off its top and bottom
-       (cutting into the "Reach & Grab" card at the top). */
+       vertically positioned via .bb-ov__illus, so if the section is any
+       shorter, clipping would cut into the "Reach & Grab" card at the top. */
     min-height: 890px;
     background: #fff;
-    overflow: hidden;
+    /* The illustration's tree is meant to rise above this section's own
+       top edge, reading as if it grows up out of the hero's green hill
+       right above — overflow must stay visible for that to show instead
+       of being clipped at the section boundary. The page-level
+       overflow-x:clip (baby-boost.astro) still guards against a
+       horizontal scrollbar from the illustration's slight right bleed. */
+    overflow: visible;
   }
   .bb-ov__text { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 180px; width: 675.352px; flex-shrink: 0; }
   .bb-ov__t { display: flex; flex-direction: column; gap: 9.005px; }
@@ -57,7 +62,16 @@ import { withBase } from '../../lib/base';
     font-family: var(--font-sans); font-weight: 600; font-size: 10.505px; line-height: 15.008px;
     padding: 7.504px 12.006px; border-radius: 75.039px; white-space: nowrap;
   }
-  .bb-ov__illus { position: absolute; right: -24px; top: 50%; transform: translateY(-50%); z-index: 0; }
+  .bb-ov__illus {
+    position: absolute;
+    right: -24px;
+    /* Shifted up from dead-center so the tree at the top of the artwork
+       overlaps the hero section above instead of sitting fully inside
+       this section's own white background. */
+    top: calc(50% - 60px);
+    transform: translateY(-50%);
+    z-index: 0;
+  }
   .bb-ov__illus img { width: 828px; height: 871px; display: block; }
 
   @media (max-width: 1100px) {
