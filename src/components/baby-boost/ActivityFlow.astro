@@ -59,13 +59,20 @@ import { withBase } from '../../lib/base';
     display: flex;
     align-items: center;
     gap: 150px;
-    padding: 75.039px 100px;
+    /* Top padding is 0, not 75.039, because Personalized Daily Journey (the
+       previous section) already contributes its own 75.039px bottom padding
+       — carrying both would double the visible gap to ~150px. */
+    padding: 0 100px 75.039px;
     background: #fff;
   }
   .bb-af__frame {
     position: relative;
     flex-shrink: 0;
     width: 220px;
+    /* Lines the phone up with Personalized Daily Journey's text column above
+       it (measured at the page's 1440px design width), same treatment as
+       Moments Documentation/Library below. */
+    margin-left: 50.074px;
     /* Matches the phone's own bezel-stroke crop below (393 x 852 of the
        1920x1080 source), not the square white card behind it in the
        recording. */
@@ -91,7 +98,8 @@ import { withBase } from '../../lib/base';
     top: -15.49%;
   }
   .bb-af__text {
-    max-width: 675.352px;
+    width: 475.75px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 9.005px;
@@ -100,26 +108,28 @@ import { withBase } from '../../lib/base';
     font-family: var(--font-sf);
     font-weight: 700;
     font-size: 30px;
-    line-height: 1.25;
-    color: #311976;
+    line-height: 1.2;
+    color: #191e76;
   }
   .bb-af__body {
     font-family: var(--font-sf);
     font-weight: 400;
-    font-size: 18px;
+    font-size: 20.25px;
     line-height: 1.3;
     color: #000;
   }
   .bb-af__body strong { font-weight: 700; }
   .bb-af__tags {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 15px;
-    color: #2151d1;
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 15.75px;
+    line-height: 1.5;
+    color: #072281;
   }
 
   @media (max-width: 900px) {
     .bb-af { flex-direction: column; align-items: flex-start; padding: 56px clamp(20px, 5vw, 100px); gap: 32px; }
     .bb-af__text { max-width: 100%; }
+    .bb-af__frame { margin-left: 0; }
   }
 </style>

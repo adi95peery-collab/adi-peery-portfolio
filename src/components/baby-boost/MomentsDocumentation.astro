@@ -1,0 +1,146 @@
+---
+// Baby Boost — Moments Documentation (real HTML). Same treatment as
+// ActivityFlow.astro: the recording plays inline, cropped to just the phone
+// mockup's own bezel (black recording backdrop + white card removed, device
+// frame and rounded corners kept). Text sits on the left here, phone on the
+// right — the mirror of ActivityFlow's layout.
+import { withBase } from '../../lib/base';
+---
+<section class="bb-md" data-fidelity="bb-moments-documentation" data-reveal>
+  <div class="bb-md__text">
+    <h2 class="bb-md__title">Moments Documentation</h2>
+    <p class="bb-md__body">Parents can capture, organize, and share meaningful memories throughout their child's development — preserving <strong>milestones, first achievements, and everyday moments</strong> along the way.</p>
+    <p class="bb-md__tags">Memory Capture &bull; Milestone Memories &bull; Family Sharing</p>
+  </div>
+  <div class="bb-md__frame">
+    <video
+      class="bb-md__video"
+      src={withBase('/assets/baby-boost/activities/moments-prototype.mp4')}
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+      aria-label="Screen recording: capturing and documenting a developmental moment"
+    />
+  </div>
+</section>
+
+<script>
+  // The recording opens with the app's Home/Gallery/Camera screens; the loop
+  // starts at the "Save Moment" review screen instead (once its Continue
+  // button has fully rendered, ~6.2s in) so every cycle shows the actual
+  // capture-review-save flow. Looping via `timeupdate` (jumping back just
+  // before the true end) rather than the native `loop` attribute or an
+  // `ended` listener — both can show a stale/black decoder frame right at
+  // the end-of-stream boundary.
+  const STABLE_START = 6.2;
+  const LOOP_MARGIN = 0.15;
+  document.querySelectorAll<HTMLVideoElement>('.bb-md__video').forEach((video) => {
+    const start = () => { video.currentTime = STABLE_START; };
+    if (video.readyState >= 1) start();
+    else video.addEventListener('loadedmetadata', start, { once: true });
+    video.addEventListener('timeupdate', () => {
+      if (video.duration && video.currentTime >= video.duration - LOOP_MARGIN) {
+        video.currentTime = STABLE_START;
+      }
+    });
+    // Seeking to an unbuffered position can leave the video paused instead
+    // of continuing playback — calling play() right after setting
+    // currentTime doesn't survive the async seek, so resume once it
+    // actually lands instead.
+    video.addEventListener('seeked', () => {
+      if (video.paused) video.play();
+    });
+  });
+</script>
+
+<style>
+  .bb-md {
+    display: flex;
+    align-items: center;
+    gap: 150px;
+    /* Bottom padding is 0, not 75.039, because Parenting Support Library
+       (the next section) already contributes its own 75.039px top padding —
+       carrying both would double the visible gap to ~150px. */
+    padding: 75.039px 100px 0;
+    background: #fff;
+  }
+  .bb-md__text {
+    /* Figma auto-layout: W 475.75, matching the width used across the other
+       real sections (Onboarding, Journey, Library) — the video's own
+       gap:150px was making this column stretch much wider than the design,
+       so lines ran too long before wrapping. */
+    width: 475.75px;
+    /* Lines this section's text up with Library's text column below it —
+       Library's own design canvas insets its text 51.75px past the section
+       padding, so match that offset here too (measured at the page's
+       1440px design width). */
+    margin-left: 50.074px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9.005px;
+  }
+  .bb-md__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #191e76;
+  }
+  .bb-md__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 20.25px;
+    line-height: 1.3;
+    color: #000;
+  }
+  .bb-md__body strong { font-weight: 700; }
+  .bb-md__tags {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 15.75px;
+    line-height: 1.5;
+    color: #072281;
+  }
+  .bb-md__frame {
+    position: relative;
+    flex-shrink: 0;
+    width: 220px;
+    /* Lines the phone up with Library's phone below it, past the text's own
+       shift above (measured at the page's 1440px design width). */
+    margin-left: 88.168px;
+    /* Matches the phone's own bezel-stroke crop below (393 x 852 of the
+       1920x1080 source — same recording rig as ActivityFlow.astro). */
+    aspect-ratio: 393 / 852;
+    /* The recorded bezel's own corner curve measures ~49.5px radius at
+       source scale, ~14px once scaled down to this 220px-wide frame. A
+       looser radius here (the previous 20px) clips outside that curve and
+       exposes the video's white backdrop as a sliver at each corner. */
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .bb-md__video {
+    /* This recording's device mockup is pinned in place for its whole
+       duration (unlike ActivityFlow.astro's camera pan), and its backdrop is
+       plain white — the same white as this section's own background — so
+       the crop just needs to fit the phone bezel once (measured at
+       x:80-865, y:80-1783 of the 946x1864 source) rather than track a
+       moving target. The global `video { max-width: 100%; height: auto }`
+       reset would otherwise clamp this back down and break the crop math. */
+    position: absolute;
+    display: block;
+    max-width: none;
+    width: 120.51%;
+    height: 109.45%;
+    left: -10.19%;
+    top: -4.70%;
+  }
+
+  @media (max-width: 900px) {
+    .bb-md { flex-direction: column-reverse; align-items: flex-start; padding: 56px clamp(20px, 5vw, 100px); gap: 32px; }
+    .bb-md__text { max-width: 100%; margin-left: 0; }
+    .bb-md__frame { margin-left: 0; }
+  }
+</style>
