@@ -36,7 +36,11 @@ import { withBase } from '../../lib/base';
     display: flex;
     align-items: center;
     padding: 112.5px 100px;
-    min-height: 816px;
+    /* Must be at least the illustration's own height (871px) — it's
+       vertically centered via .bb-ov__illus, so if the section is any
+       shorter, overflow:hidden clips equal slices off its top and bottom
+       (cutting into the "Reach & Grab" card at the top). */
+    min-height: 890px;
     background: #fff;
     overflow: hidden;
   }
