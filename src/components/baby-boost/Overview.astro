@@ -36,10 +36,7 @@ import { withBase } from '../../lib/base';
     display: flex;
     align-items: center;
     padding: 112.5px 100px;
-    /* Must be at least the illustration's own height (871px) — it's
-       vertically positioned via .bb-ov__illus, so if the section is any
-       shorter, clipping would cut into the "Reach & Grab" card at the top. */
-    min-height: 890px;
+    min-height: 816px;
     background: #fff;
     /* The illustration's tree is meant to rise above this section's own
        top edge, reading as if it grows up out of the hero's green hill
@@ -65,11 +62,14 @@ import { withBase } from '../../lib/base';
   .bb-ov__illus {
     position: absolute;
     right: -24px;
-    /* Shifted up from dead-center so the tree at the top of the artwork
-       overlaps the hero section above instead of sitting fully inside
-       this section's own white background. */
-    top: calc(50% - 60px);
-    transform: translateY(-50%);
+    /* Anchored to the section's own bottom edge (not vertically centered)
+       so the path/hill at the bottom of the artwork always sits flush
+       against the section boundary, with no white gap below it. The
+       artwork (871px) is taller than the section typically renders, so
+       its top end runs past the section's own top edge — reading as the
+       tree growing up out of the hero background above. overflow:visible
+       lets that overlap show instead of clipping it. */
+    bottom: 0;
     z-index: 0;
   }
   .bb-ov__illus img { width: 828px; height: 871px; display: block; }
