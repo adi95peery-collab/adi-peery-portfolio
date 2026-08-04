@@ -9,6 +9,7 @@ import Overview from '../../components/baby-boost/Overview.astro';
 import Onboarding from '../../components/baby-boost/Onboarding.astro';
 import PersonalizedJourney from '../../components/baby-boost/PersonalizedJourney.astro';
 import ActivityFlow from '../../components/baby-boost/ActivityFlow.astro';
+import GrowthJourney from '../../components/baby-boost/GrowthJourney.astro';
 import MomentsDocumentation from '../../components/baby-boost/MomentsDocumentation.astro';
 import Library from '../../components/baby-boost/Library.astro';
 import Impact from '../../components/baby-boost/Impact.astro';
@@ -25,15 +26,14 @@ const beforeOnboarding: [string, string, number][] = [
   [`${A}/04a-wireframes.png`, 'Wireframes for the core flows', 1049.07],
 ];
 const afterJourney: [string, string, number][] = [
-  // Both images had oversized blank margins baked into their shared seam
-  // (04c had ~161px of dead white at its bottom, 04d ~79px at its top —
-  // ~240px combined); re-cropped/padded so the gap between them is exactly
-  // 100px, matching Figma's actual Workflow 01 → Workflow 3 spacing.
-  [`${A}/04c-journey.png`, 'Journey and milestones', 2021.05],
-  // 04d-beyond.png used to continue into the "Parenting support library"
-  // section baked into the flat image; that part is cropped off here and
-  // rebuilt as a real <Library /> component below instead.
-  [`${A}/04d-beyond.png`, 'Beyond the activity', 946],
+  // 04d-beyond.png used to continue into the "Moments documentation" and
+  // "Parenting support library" sections baked into the flat image; both are
+  // cropped off here since they're now rebuilt as real <MomentsDocumentation
+  // /> and <Library /> components below (keeping the flat versions too was
+  // showing every duplicated). 04c-journey.png is rendered by <GrowthJourney
+  // /> above, unmodified, with just a scrollable overlay dropped onto its
+  // phone's map area.
+  [`${A}/04d-beyond.png`, 'Beyond the activity', 982.5],
 ];
 const afterLibrary: [string, string, number][] = [
   [`${A}/04e-ai-collab.png`, 'AI collaboration and the illustration system', 3434.22],
@@ -54,6 +54,7 @@ const afterLibrary: [string, string, number][] = [
       <Onboarding />
       <PersonalizedJourney />
       <ActivityFlow />
+      <GrowthJourney />
       {afterJourney.map(([src, alt, h]) => (
         <CaseStudySection src={src} alt={alt} height={h} />
       ))}

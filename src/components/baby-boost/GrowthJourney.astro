@@ -1,0 +1,119 @@
+---
+// Baby Boost — Growth Journey & Motivation (Workflow #02). The section is
+// the exact Figma export (04c-journey.png), completely untouched — eyebrow,
+// title, legend, phone chrome, all of it. Two things are layered on top of
+// it, both measured directly against this image (2880x4366 canvas):
+// 1. A scrollable div holding the tall milestone-path image underneath —
+//    sized to the full green panel (1419-2680px × 480-2318px), not just the
+//    phone screen (1777-2423px × 672-2108px). Figma's own "scroll" layer
+//    bleeds decoration (trees, a sunflower, milestone cards) out past the
+//    phone on every side, not just left/right — sizing the scroll layer to
+//    only the phone's own height clipped that bleed mid-card at the top/
+//    bottom edges. It needs to scroll in sync with what's inside the phone,
+//    or the static background peeking out around the phone shows a
+//    different moment of the path than what's visible through the screen.
+// 2. The phone's own header/stat-cards/nav chrome (transparent middle,
+//    matching the phone screen only: 1777-2423px × 672-2108px), pinned on
+//    top, pointer-events:none, so it reads as fixed while the map scrolls
+//    beneath it — the rest of the flat image stays exactly as designed.
+// A third small overlay pins the flat image's own "Scroll Here" tooltip +
+// arrow (1023-1750px × 1469-1839px, trimmed tight to just that box/arrow/
+// rock group via chroma-key + auto-trim so no neighboring card or path
+// decoration bleeds in) — a static prototype annotation, not path
+// decoration — back on top, since part of it sits inside the wider scroll
+// layer's bounds and would otherwise get covered by scrolling content.
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/baby-boost');
+const J = withBase('/assets/baby-boost/journey');
+const DESIGN_WIDTH = 1440;
+const DESIGN_HEIGHT = 2183;
+---
+<section class="bb-gj" data-fidelity="bb-growth-journey" data-reveal>
+  <div class="bb-gj__frame">
+    <img class="bb-gj__image" src={`${A}/04c-journey.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="Growth journey and motivation — a map-based progression system that transforms developmental growth into a clear and motivating journey." loading="lazy" decoding="async" />
+    <div class="bb-gj__phone-scroll" tabindex="0" role="group" aria-label="Daniel's developmental journey — scroll to see milestones">
+      <img class="bb-gj__phone-scroll-img" src={`${J}/journey-scroll-path.png`} width="638" height="2300" alt="" aria-hidden="true" />
+    </div>
+    <img class="bb-gj__phone-chrome" src={`${J}/journey-chrome-overlay.png`} width="664" height="1438" alt="" aria-hidden="true" />
+    <img class="bb-gj__scroll-hint" src={`${J}/scroll-hint-overlay.png`} width="727" height="370" alt="" aria-hidden="true" />
+  </div>
+</section>
+
+<script>
+  // The scroll image's bottom edge sits flush with the scroll panel's own
+  // bottom edge at max scroll (by definition of how overflow scrolling
+  // clamps). Right at that exact boundary, the browser's image scaling
+  // introduces a faint 1px seam/line (edge-sampling artifact), visible as a
+  // thin dark stripe under the last card. Clamping scrollTop a few px short
+  // of the true max keeps that boundary permanently just out of view.
+  const EDGE_BUFFER = 8;
+  document.querySelectorAll<HTMLElement>('.bb-gj__phone-scroll').forEach((panel) => {
+    panel.addEventListener('scroll', () => {
+      const max = panel.scrollHeight - panel.clientHeight - EDGE_BUFFER;
+      if (max > 0 && panel.scrollTop > max) panel.scrollTop = max;
+    });
+  });
+</script>
+
+<style>
+  .bb-gj {
+    background: #fff;
+  }
+  .bb-gj__frame {
+    position: relative;
+    width: 100%;
+  }
+  .bb-gj__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .bb-gj__phone-scroll {
+    position: absolute;
+    left: 49.271%;
+    top: 10.994%;
+    width: 43.785%;
+    height: 42.075%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    /* Without this, scrolling past the phone's own top/bottom limit
+       "chains" to the page — the page (and the phone riding along with it)
+       starts scrolling instead of the gesture just stopping, which reads as
+       the phone moving. This keeps the phone visually static; only its own
+       content ever moves. */
+    overscroll-behavior: contain;
+    /* The green panel itself has a ~24px rounded corner (measured directly
+       against the flat image). This box's right/bottom edges sit close
+       enough to the panel's own right/bottom edges that without a matching
+       radius here, the scrolling content's square corners poke past the
+       panel's rounded ones — a rectangular sliver of green showing outside
+       the panel's curve. */
+    border-radius: 24px;
+  }
+  .bb-gj__phone-scroll::-webkit-scrollbar { display: none; }
+  .bb-gj__phone-scroll-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .bb-gj__phone-chrome {
+    position: absolute;
+    left: 61.701%;
+    top: 15.392%;
+    width: 22.431%;
+    height: 32.891%;
+    display: block;
+    pointer-events: none;
+  }
+  .bb-gj__scroll-hint {
+    position: absolute;
+    left: 35.521%;
+    top: 33.646%;
+    width: 25.243%;
+    height: 8.475%;
+    display: block;
+    pointer-events: none;
+  }
+</style>
