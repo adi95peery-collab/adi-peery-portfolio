@@ -25,14 +25,18 @@ const A = withBase('/assets/smart-stock');
 const research: [string, string, number] = [
   `${A}/04-research.png`, 'Research and ideation: user interviews, insights, and early concepts', 1210,
 ];
-const afterWorkflow1: [string, string, number][] = [
-  [`${A}/05b-workflow01.png`, 'Workflow 1 — zoomed walkthrough of a key task', 1245.65],
+// A 4th tuple slot (reveal) opts a block OUT of its own scroll-reveal when it's
+// a direct visual continuation of the chapter above it (no new heading of its
+// own) — otherwise every image would re-trigger the fade-in mid-chapter,
+// instead of one reveal per big heading section (Workflow #01, #02, etc).
+const afterWorkflow1: [string, string, number, boolean?][] = [
+  [`${A}/05b-workflow01.png`, 'Workflow 1 — zoomed walkthrough of a key task', 1245.65, false],
 ];
-const afterWorkflow2: [string, string, number][] = [
-  [`${A}/05d-flow2.png`, 'Workflow 2 — zoomed walkthrough', 1245.65],
+const afterWorkflow2: [string, string, number, boolean?][] = [
+  [`${A}/05d-flow2.png`, 'Workflow 2 — zoomed walkthrough', 1245.65, false],
   [`${A}/05e-dashboard.png`, 'The Smart Stock dashboard design', 1669.62],
 ];
-const afterGoodsReceiving: [string, string, number][] = [
+const afterGoodsReceiving: [string, string, number, boolean?][] = [
   [`${A}/06-design-system.png`, 'Design system and style guide', 1173.38],
 ];
 ---
@@ -51,16 +55,16 @@ const afterGoodsReceiving: [string, string, number][] = [
       <CaseStudySection src={research[0]} alt={research[1]} height={research[2]} />
       <Wireframes />
       <Workflow01 />
-      {afterWorkflow1.map(([src, alt, h]) => (
-        <CaseStudySection src={src} alt={alt} height={h} />
+      {afterWorkflow1.map(([src, alt, h, reveal]) => (
+        <CaseStudySection src={src} alt={alt} height={h} reveal={reveal} />
       ))}
       <Workflow02 />
-      {afterWorkflow2.map(([src, alt, h]) => (
-        <CaseStudySection src={src} alt={alt} height={h} />
+      {afterWorkflow2.map(([src, alt, h, reveal]) => (
+        <CaseStudySection src={src} alt={alt} height={h} reveal={reveal} />
       ))}
       <GoodsReceiving />
-      {afterGoodsReceiving.map(([src, alt, h]) => (
-        <CaseStudySection src={src} alt={alt} height={h} />
+      {afterGoodsReceiving.map(([src, alt, h, reveal]) => (
+        <CaseStudySection src={src} alt={alt} height={h} reveal={reveal} />
       ))}
       <Impact />
     </main>

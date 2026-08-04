@@ -21,8 +21,10 @@ const hero: [string, string, number] = [`${A}/01-hero.png`, 'Baby Boost — a pa
 // 04b-workflow01.png (the old "Adaptive Onboarding Experience" + "Guided
 // activity experience" flat image) has been fully replaced by the real
 // <Onboarding /> and <ActivityFlow /> components below.
-const beforeOnboarding: [string, string, number][] = [
-  [`${A}/03-research.png`, 'Research and ideation', 2135.94],
+const beforeOnboarding: [string, string, number, boolean?][] = [
+  // Research diagram's scroll-reveal (fade + translateY) reads poorly against
+  // its illustrated connector graphics, so it's opted out here.
+  [`${A}/03-research.png`, 'Research and ideation', 2135.94, false],
   [`${A}/04a-wireframes.png`, 'Wireframes for the core flows', 1049.07],
 ];
 const afterJourney: [string, string, number][] = [
@@ -46,10 +48,10 @@ const afterLibrary: [string, string, number][] = [
   <div class="page">
     <main class="case-study">
       <h1 class="sr-only">Baby Boost — a parenting app</h1>
-      <CaseStudySection src={hero[0]} alt={hero[1]} height={hero[2]} eager={true} />
+      <CaseStudySection src={hero[0]} alt={hero[1]} height={hero[2]} eager={true} reveal={false} />
       <Overview />
-      {beforeOnboarding.map(([src, alt, h]) => (
-        <CaseStudySection src={src} alt={alt} height={h} />
+      {beforeOnboarding.map(([src, alt, h, reveal]) => (
+        <CaseStudySection src={src} alt={alt} height={h} reveal={reveal} />
       ))}
       <Onboarding />
       <PersonalizedJourney />
