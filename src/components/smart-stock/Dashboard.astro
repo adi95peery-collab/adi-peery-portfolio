@@ -1,0 +1,68 @@
+---
+// Smart Stock — Operational Dashboard (real HTML heading + flat screenshot).
+// The flat export's own "Dashboard Overview: / Operational Dashboard" text
+// block has been cropped off (05e-dashboard-card.png starts right at the
+// card) and rebuilt as real HTML below, reusing the same eyebrow/title/body
+// type styles already established for this pattern elsewhere on the page
+// (Workflow01.astro). No video here — this screen is a static screenshot.
+import { withBase } from '../../lib/base';
+
+const A = withBase('/assets/smart-stock');
+const DESIGN_WIDTH = 1440;
+const DESIGN_HEIGHT = 1409;
+---
+<section class="ss-db" data-fidelity="ss-dashboard" data-reveal>
+  <div class="ss-db__text">
+    <p class="ss-db__eyebrow">Dashboard Overview:</p>
+    <h2 class="ss-db__title">Operational Dashboard</h2>
+    <p class="ss-db__body">The dashboard brings together real-time business performance and forward-looking insights, helping users manage current inventory, upcoming stock, and daily operations from a single place.</p>
+  </div>
+  <img class="ss-db__image" src={`${A}/05e-dashboard-card.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="The Smart Stock operational dashboard, showing live business performance, AI-driven insights, and incoming shipments." loading="lazy" decoding="async" />
+</section>
+
+<style>
+  .ss-db {
+    display: flex;
+    flex-direction: column;
+    gap: 67px;
+    padding: 75.039px 100px 0;
+    background: #fff;
+  }
+  .ss-db__text {
+    max-width: 675.352px;
+    display: flex;
+    flex-direction: column;
+    gap: 9.005px;
+  }
+  .ss-db__eyebrow {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #857f96;
+  }
+  .ss-db__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.19;
+    color: #311976;
+  }
+  .ss-db__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #000;
+  }
+  .ss-db__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 1040px) {
+    .ss-db { padding: 56px clamp(20px, 5vw, 100px) 0; }
+    .ss-db__text { max-width: 100%; }
+  }
+</style>

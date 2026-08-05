@@ -13,6 +13,7 @@ import Wireframes from '../../components/smart-stock/Wireframes.astro';
 import Workflow01 from '../../components/smart-stock/Workflow01.astro';
 import Workflow02 from '../../components/smart-stock/Workflow02.astro';
 import GoodsReceiving from '../../components/smart-stock/GoodsReceiving.astro';
+import Dashboard from '../../components/smart-stock/Dashboard.astro';
 import Impact from '../../components/smart-stock/Impact.astro';
 import { withBase } from '../../lib/base';
 
@@ -34,7 +35,6 @@ const afterWorkflow1: [string, string, number, boolean?][] = [
 ];
 const afterWorkflow2: [string, string, number, boolean?][] = [
   [`${A}/05d-flow2.png`, 'Workflow 2 — zoomed walkthrough', 1245.65, false],
-  [`${A}/05e-dashboard.png`, 'Dashboard Overview: Operational Dashboard — the dashboard brings together real-time business performance and forward-looking insights, helping users manage current inventory, upcoming stock, and daily operations from a single place.', 1669.62],
 ];
 const afterGoodsReceiving: [string, string, number, boolean?][] = [
   [`${A}/06-design-system.png`, 'Design system and style guide', 1173.38],
@@ -62,6 +62,7 @@ const afterGoodsReceiving: [string, string, number, boolean?][] = [
       {afterWorkflow2.map(([src, alt, h, reveal]) => (
         <CaseStudySection src={src} alt={alt} height={h} reveal={reveal} />
       ))}
+      <Dashboard />
       <GoodsReceiving />
       {afterGoodsReceiving.map(([src, alt, h, reveal]) => (
         <CaseStudySection src={src} alt={alt} height={h} reveal={reveal} />

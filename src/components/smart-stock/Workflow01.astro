@@ -1,23 +1,34 @@
 ---
-// Smart Stock — Workflow #01 (real video embed). The section is the exact
-// Figma export (05a-wireframes.png), completely untouched — heading, eyebrow,
-// title, body copy, light-blue card, all of it. The one dynamic piece is the
-// app-screen mockup inside the card: a real screen recording plays there
-// instead of the flat screenshot, cropped to exactly the screenshot's own
-// bounds (655-2224px × 997-2013px of this 2880x2104 canvas, measured
-// directly against the flat image — matches the recording's own 1996x1288
-// aspect ratio almost exactly) so it reads as part of the same static
-// artwork rather than a separate video player bolted on top.
+// Smart Stock — Workflow #01 (real HTML heading + video embed). The flat
+// export's own text block (chapter heading "From Ideation to Execution" +
+// subtitle, then the "Workflow #01" eyebrow/title/body) has been cropped off
+// (05a-wireframes-card.png starts right at the card) and rebuilt as real
+// HTML below, matching type styles already established elsewhere on this
+// page (Overview's 45px title for the chapter heading, Wireframes' 30px
+// title/eyebrow pattern for the workflow-specific heading).
+// The video overlay itself is unchanged: cropped to exactly the screenshot's
+// own bounds (measured directly against the flat image — matches the
+// recording's own 1996x1288 aspect ratio almost exactly) so it reads as part
+// of the same static artwork rather than a separate video player bolted on.
 import { withBase } from '../../lib/base';
 
 const A = withBase('/assets/smart-stock');
 const V = withBase('/assets/smart-stock/video');
 const DESIGN_WIDTH = 1440;
-const DESIGN_HEIGHT = 1052;
+const DESIGN_HEIGHT = 599;
 ---
 <section class="ss-w1" data-fidelity="ss-workflow-01" data-reveal>
+  <div class="ss-w1__intro">
+    <h2 class="ss-w1__chapter-title">From Ideation to Execution</h2>
+    <p class="ss-w1__chapter-subtitle">Core workflows, in action — highlighting key interactions and decision points across the system</p>
+  </div>
+  <div class="ss-w1__text">
+    <p class="ss-w1__eyebrow">Workflow #01:</p>
+    <h3 class="ss-w1__title">Simplifying multi-supplier inventory order into a single, intuitive flow.</h3>
+    <p class="ss-w1__body">Browse products by category, search effortlessly, compare prices in real time, and see supplier-specific delivery times at a glance.</p>
+  </div>
   <div class="ss-w1__frame">
-    <img class="ss-w1__image" src={`${A}/05a-wireframes.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="From Ideation to Execution: core workflows, in action — highlighting key interactions and decision points across the system. Workflow #01 — simplifying multi-supplier inventory ordering into a single, intuitive flow." loading="lazy" decoding="async" />
+    <img class="ss-w1__image" src={`${A}/05a-wireframes-card.png`} width={DESIGN_WIDTH} height={DESIGN_HEIGHT} style={`aspect-ratio: ${DESIGN_WIDTH} / ${DESIGN_HEIGHT};`} alt="Purchase order screen — browsing suppliers, comparing prices, and creating a new order." loading="lazy" decoding="async" />
     <video
       class="ss-w1__video"
       src={`${V}/workflow-01-flow.mp4`}
@@ -55,7 +66,58 @@ const DESIGN_HEIGHT = 1052;
 
 <style>
   .ss-w1 {
+    display: flex;
+    flex-direction: column;
+    gap: 47px;
+    padding: 75.039px 100px 0;
     background: #fff;
+  }
+  .ss-w1__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 9.005px;
+  }
+  .ss-w1__chapter-title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 45.023px;
+    line-height: 1.19;
+    color: #311976;
+  }
+  .ss-w1__chapter-subtitle {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18.009px;
+    line-height: 1.3;
+    color: #000;
+    max-width: 675.352px;
+  }
+  .ss-w1__text {
+    max-width: 675.352px;
+    display: flex;
+    flex-direction: column;
+    gap: 9.005px;
+  }
+  .ss-w1__eyebrow {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #857f96;
+  }
+  .ss-w1__title {
+    font-family: var(--font-sf);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.19;
+    color: #311976;
+  }
+  .ss-w1__body {
+    font-family: var(--font-sf);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #000;
   }
   .ss-w1__frame {
     position: relative;
@@ -69,9 +131,9 @@ const DESIGN_HEIGHT = 1052;
   .ss-w1__video {
     position: absolute;
     left: 22.743%;
-    top: 47.386%;
+    top: 7.596%;
     width: 54.479%;
-    height: 48.289%;
+    height: 84.808%;
     display: block;
     object-fit: cover;
     /* Figma: 4.5px corner radius on this screen layer (measured at the
@@ -79,5 +141,11 @@ const DESIGN_HEIGHT = 1052;
        fixed-px radii on fluid-width frames, e.g. GrowthJourney's phone
        panel). */
     border-radius: 4.5px;
+  }
+
+  @media (max-width: 1040px) {
+    .ss-w1 { padding: 56px clamp(20px, 5vw, 100px) 0; }
+    .ss-w1__chapter-subtitle, .ss-w1__text { max-width: 100%; }
+    .ss-w1__chapter-title { font-size: clamp(30px, 5vw, 45px); }
   }
 </style>
